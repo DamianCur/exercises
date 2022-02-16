@@ -1,16 +1,17 @@
 
+const urlString = window.location.search
+console.log(urlString);
+
+
+// class GetUrlParameters {
 
 
 
-class GetUrlParameters {
+//     constructor() {
 
 
-    
-    constructor(){
-
-
-    }
+//     }
 
 
 
-}
+// }
