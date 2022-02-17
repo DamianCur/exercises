@@ -118,13 +118,62 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"GetUrlParameters.ts":[function(require,module,exports) {
-"use strict";
+"use strict"; // const urlString = "url.com/post?colors[2]=red&valid=true&colors[0]=green&user=Jan&age=25"
 
-var urlString = window.location.search;
-console.log(urlString); // class GetUrlParameters {
-//     constructor() {
-//     }
-// }
+var UrlParameters =
+/** @class */
+function () {
+  function UrlParameters() {
+    // url.com/post?
+    var urlString = "colors[2]=red&valid=true&colors[0]=green&user=Jan&age=25";
+    this.url = urlString;
+  }
+
+  UrlParameters.prototype.getUrlParameters = function () {
+    // https
+    // new URL - params
+    //  "?colors[2]=red&valid=true&colors[0]=green&user=Jan&age=25"
+    var urlStringSplitAmpersand = this.url.split("&").map(function (el) {
+      return el.split("=");
+    });
+    var searchParams = new URLSearchParams(this.url);
+    var arr = Array.from(searchParams.entries());
+    console.log(arr); // arr.reduce
+    // * switch ...
+    // key - [
+    // 2 - index
+    // colors - nazwa tablicy
+    // ...
+    // let result = {}
+    // const arrayName = "colors" - nazwa tablicy
+    // const index = 2
+    // const value = "red"
+    // czy ta tablica nie istnieje w obiekcie?
+    // result[arrayName] = []
+    // result[arrayName][index] = value;
+    // val === "true" || val === "false"
+    // Boolean(val) / true
+    // Number.isFinite(Number(value))
+    // string
+    // { valid: true, user: "Jan", age: 25 }
+    // *
+    // const test = parameters.forEach((el): void => {
+    //     const keyValue = searchParams.get(el) as string
+    //     result.colors.push(keyValue)
+    //     //dynamicznie dodawać wartości do obiektu
+    // })
+    // console.log(result);
+  };
+
+  UrlParameters.prototype.init = function () {
+    this.getUrlParameters();
+  };
+
+  return UrlParameters;
+}();
+
+var app = new UrlParameters();
+app.init();
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -153,7 +202,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57207" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59101" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
