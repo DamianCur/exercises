@@ -118,51 +118,61 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"GetUrlParameters.ts":[function(require,module,exports) {
-"use strict"; // const urlString = "url.com/post?colors[2]=red&valid=true&colors[0]=green&user=Jan&age=25"
+"use strict";
+
+var urlString = "http://url.com/post?colors[2]=red&valid=true&colors[0]=green&user=Jan&age=25";
 
 var UrlParameters =
 /** @class */
 function () {
   function UrlParameters() {
-    // url.com/post?
     var urlString = "colors[2]=red&valid=true&colors[0]=green&user=Jan&age=25";
     this.url = urlString;
+    this.result = {};
   }
 
   UrlParameters.prototype.getUrlParameters = function () {
-    // https
-    // new URL - params
-    //  "?colors[2]=red&valid=true&colors[0]=green&user=Jan&age=25"
     var urlStringSplitAmpersand = this.url.split("&").map(function (el) {
       return el.split("=");
     });
     var searchParams = new URLSearchParams(this.url);
     var arr = Array.from(searchParams.entries());
-    console.log(arr); // arr.reduce
-    // * switch ...
-    // key - [
-    // 2 - index
-    // colors - nazwa tablicy
-    // ...
-    // let result = {}
-    // const arrayName = "colors" - nazwa tablicy
-    // const index = 2
-    // const value = "red"
-    // czy ta tablica nie istnieje w obiekcie?
-    // result[arrayName] = []
-    // result[arrayName][index] = value;
-    // val === "true" || val === "false"
-    // Boolean(val) / true
-    // Number.isFinite(Number(value))
-    // string
-    // { valid: true, user: "Jan", age: 25 }
-    // *
-    // const test = parameters.forEach((el): void => {
-    //     const keyValue = searchParams.get(el) as string
-    //     result.colors.push(keyValue)
-    //     //dynamicznie dodawać wartości do obiektu
-    // })
-    // console.log(result);
+    var result = arr.reduce(function (acc, el, index) {
+      var parameter = el[0],
+          value = el[1];
+      var isElementAnArray = parameter.includes("[");
+
+      switch (true) {
+        case isElementAnArray:
+          var arrValues = parameter.split("[");
+          var arrayName = arrValues[0],
+              indexToFix = arrValues[1];
+          var valueIndex = indexToFix.slice(0, -1); // acc.colors === undefined
+
+          if (acc[arrayName] === undefined) {
+            acc[arrayName] = [];
+          }
+
+          acc[arrayName][valueIndex] = value;
+          break;
+
+        case value === "true" || value === "false":
+          var convertedStringToBoolen = value == "true";
+          acc[parameter] = convertedStringToBoolen;
+          break;
+
+        case Number(value) === NaN:
+          acc[parameter] = Number(value);
+          break;
+
+        default:
+          acc[parameter] = value;
+          break;
+      }
+
+      return acc;
+    }, {});
+    console.log(result);
   };
 
   UrlParameters.prototype.init = function () {
@@ -173,7 +183,7 @@ function () {
 }();
 
 var app = new UrlParameters();
-app.init();
+app.init(); // dynamicForm
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -202,7 +212,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59101" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59468" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
