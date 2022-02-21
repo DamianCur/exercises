@@ -42,7 +42,7 @@ class UrlParameters {
 
                     
 
-                    // acc.colors === undefined
+                   
                     if (acc[arrayName] === undefined) {
                         acc[arrayName] = []
                     }
@@ -53,6 +53,7 @@ class UrlParameters {
                     const convertedStringToBoolen = (value == "true")
                     acc[parameter] = convertedStringToBoolen
                     break;
+                    //sprawdzić warunki dlaczego zwraca Nana z operatorem !==
                 case Number(value) === NaN:
                     acc[parameter] = Number(value)
                     break;

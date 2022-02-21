@@ -148,7 +148,7 @@ function () {
           var arrValues = parameter.split("[");
           var arrayName = arrValues[0],
               indexToFix = arrValues[1];
-          var valueIndex = indexToFix.slice(0, -1); // acc.colors === undefined
+          var valueIndex = indexToFix.slice(0, -1);
 
           if (acc[arrayName] === undefined) {
             acc[arrayName] = [];
@@ -161,6 +161,7 @@ function () {
           var convertedStringToBoolen = value == "true";
           acc[parameter] = convertedStringToBoolen;
           break;
+        //sprawdzić warunki dlaczego zwraca Nana z operatorem !=
 
         case Number(value) === NaN:
           acc[parameter] = Number(value);
