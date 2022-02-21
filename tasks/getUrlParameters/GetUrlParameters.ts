@@ -23,6 +23,7 @@ class UrlParameters {
 
 
         const searchParams = new URLSearchParams(this.url)
+        // @ts-ignore
         const arr = Array.from(searchParams.entries()) as [string, string][]
         
 

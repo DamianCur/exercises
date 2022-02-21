@@ -135,7 +135,8 @@ function () {
     var urlStringSplitAmpersand = this.url.split("&").map(function (el) {
       return el.split("=");
     });
-    var searchParams = new URLSearchParams(this.url);
+    var searchParams = new URLSearchParams(this.url); // @ts-ignore
+
     var arr = Array.from(searchParams.entries());
     var result = arr.reduce(function (acc, el, index) {
       var parameter = el[0],
