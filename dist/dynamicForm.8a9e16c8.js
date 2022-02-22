@@ -178,10 +178,33 @@ var generateFormOnPattern = function generateFormOnPattern(settings) {
 
     if (Array.isArray(value) !== true) {
       utility_1.addAttributeToElement(generatedForm, key, value);
-    } //dodać logike w przypadku gdy element jest arrayem
+    }
 
+    if (Array.isArray(value) === true) {
+      var arrayValue = value;
+      arrayValue.map(function (el) {
+        //problem z otypowaniem el obiekt ze stringami 
+        console.log(el.type);
+
+        switch (el.type) {
+          case "header":
+            break;
+
+          case "email":
+            break;
+
+          case "textarea":
+            break;
+
+          case "submit":
+            break;
+
+          default:
+            throw Error("Invalid element type");
+        }
+      });
+    }
   });
-  console.log(generatedForm);
 };
 
 generateFormOnPattern(testSettings);
@@ -213,7 +236,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53582" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54108" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

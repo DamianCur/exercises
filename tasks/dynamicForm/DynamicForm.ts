@@ -31,19 +31,39 @@ const generateFormOnPattern = (settings: any): any => {
 
 
     const settingsVariables = arraySettings.map((el: any): any => {
-       
+
 
         const [key, value] = el
-        
-        if(Array.isArray(value) !== true) {
+
+        if (Array.isArray(value) !== true) {
             addAttributeToElement(generatedForm, key, value)
         }
 
-        //dodać logike w przypadku gdy element jest arrayem
+        if (Array.isArray(value) === true) {
+            const arrayValue = value
+
+            arrayValue.map((el: any) => {
+                //problem z otypowaniem el obiekt ze stringami 
+                console.log(el.type);
+                switch (el.type) {
+                    case "header":
+                        break;
+                    case "email":
+                        break;
+                    case "textarea":
+                        break;
+                    case "submit":
+                        break
+                    default:
+                        throw Error("Invalid element type")
+
+                }
+            })
+        }
     })
-    
-    console.log(generatedForm);
- 
+
+
+
 
 
 
