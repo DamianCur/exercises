@@ -123,7 +123,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addAndCreateElement = exports.addAttributeToElement = exports.isParameterAnArray = void 0;
+exports.addTextToElement = exports.addChildToParent = exports.createElement = exports.addAttributeToElement = exports.isParameterAnArray = void 0;
 
 var isParameterAnArray = function isParameterAnArray(parameter) {
   return Array.isArray(parameter);
@@ -137,14 +137,40 @@ var addAttributeToElement = function addAttributeToElement(mainElement, attribut
 
 exports.addAttributeToElement = addAttributeToElement;
 
-var addAndCreateElement = function addAndCreateElement(mainElement, elementToCreate) {
+var createElement = function createElement(elementToCreate) {
   var newElement = document.createElement(elementToCreate);
-  return mainElement.appendChild(newElement);
+  return newElement;
 };
 
-exports.addAndCreateElement = addAndCreateElement;
+exports.createElement = createElement;
+
+var addChildToParent = function addChildToParent(parent, child) {
+  return parent.appendChild(child);
+};
+
+exports.addChildToParent = addChildToParent;
+
+var addTextToElement = function addTextToElement(element, textToAdd) {
+  return element.innerHTML = textToAdd;
+};
+
+exports.addTextToElement = addTextToElement;
 },{}],"dynamicForm.ts":[function(require,module,exports) {
 "use strict";
+
+var __spreadArrays = this && this.__spreadArrays || function () {
+  for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
+    s += arguments[i].length;
+  }
+
+  for (var r = Array(s), k = 0, i = 0; i < il; i++) {
+    for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
+      r[k] = a[j];
+    }
+  }
+
+  return r;
+};
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -180,7 +206,6 @@ var generateFormOnPattern = function generateFormOnPattern(settings) {
   var wrapper = document.querySelector(".wrapper");
   var generatedForm = document.createElement("form");
   wrapper.appendChild(generatedForm);
-  console.log(wrapper);
   var arraySettings = Object.entries(settings);
   var settingsVariables = arraySettings.map(function (el) {
     var key = el[0],
@@ -192,24 +217,41 @@ var generateFormOnPattern = function generateFormOnPattern(settings) {
 
     if (utility_1.isParameterAnArray(value) === true) {
       var arrayValue = value;
-      arrayValue.map(function (el) {
+      arrayValue.map(function (el, i) {
         //problem z otypowaniem el obiekt ze stringami 
         switch (el.type) {
           case "header":
-            // addAndCreateElement(generatedForm, "busdfdfsdgtton")
-            // console.log(generatedForm);
-            var newElement = document.createElement("h4");
-            generatedForm.appendChild(newElement);
-            console.log(generatedForm);
+            var headerElement = utility_1.createElement("h4");
+            utility_1.addChildToParent(generatedForm, headerElement); //czy połączyć tworzenie i dodawanie elementu do jednej funkcji?
+            //w jaki sposób dodać określić kolejność h4                        
+
+            utility_1.addTextToElement(headerElement, el.type);
             break;
 
           case "email":
+            var inputElement = utility_1.createElement("input");
+            utility_1.addChildToParent(generatedForm, inputElement);
             break;
 
           case "textarea":
+            var textareaElement = utility_1.createElement("textarea");
+            utility_1.addChildToParent(generatedForm, textareaElement); //zautymatyzowanie dodawania atrybutów
+            // jakiej logiki użyć do pozyskania elementu
+
+            var elementKey = Object.keys(el).map(function (el) {
+              return el;
+            });
+            var elementValue = Object.values(el).map(function (el) {
+              return el;
+            });
+            textareaElement.setAtrybute.apply(textareaElement, __spreadArrays(elementKey, elementValue)); // jak przypisać keys i values do setAtrybute
+
             break;
 
           case "submit":
+            var buttonElement = utility_1.createElement("button");
+            utility_1.addChildToParent(generatedForm, buttonElement);
+            utility_1.addTextToElement(buttonElement, el.label);
             break;
 
           default:

@@ -1,5 +1,5 @@
 import { Body } from "node-fetch";
-import { isParameterAnArray, addAttributeToElement, addAndCreateElement } from "./utility"
+import { isParameterAnArray, addAttributeToElement, createElement, addChildToParent, addTextToElement } from "./utility"
 
 
 const testSettings = {
@@ -28,12 +28,11 @@ interface ISettings {
 
 const generateFormOnPattern = (settings: any): any => {
     const wrapper = document.querySelector(".wrapper") as HTMLElement
-    const generatedForm = document.createElement("form") 
+    const generatedForm = document.createElement("form")
     wrapper.appendChild(generatedForm)
-    console.log(wrapper);
-    
-   
-    
+
+
+
     const arraySettings = Object.entries(settings)
 
 
@@ -49,31 +48,55 @@ const generateFormOnPattern = (settings: any): any => {
         if (isParameterAnArray(value) === true) {
             const arrayValue = value
 
-            arrayValue.map((el: any) => {
+            arrayValue.map((el: any, i: number) => {
                 //problem z otypowaniem el obiekt ze stringami 
-                
 
 
                 switch (el.type) {
                     case "header":
-                        // addAndCreateElement(generatedForm, "busdfdfsdgtton")
-                        // console.log(generatedForm);
 
-                        const newElement = document.createElement("h4")
-                        generatedForm.appendChild(newElement)
-                        console.log(generatedForm);
+
+                        const headerElement = createElement("h4")
+                        addChildToParent(generatedForm, headerElement)
+
+                        //czy połączyć tworzenie i dodawanie elementu do jednej funkcji?
+                        //w jaki sposób dodać określić kolejność h4                        
+                        addTextToElement(headerElement, el.type)
                         break;
                     case "email":
+                        const inputElement = createElement("input")
+                        addChildToParent(generatedForm, inputElement)
                         break;
                     case "textarea":
+                        const textareaElement = createElement("textarea")
+                        addChildToParent(generatedForm, textareaElement)
+                        //zautymatyzowanie dodawania atrybutów
+                        // jakiej logiki użyć do pozyskania elementu
+                        const elementKey = Object.keys(el).map((el) => {
+                            return el
+                        })
+                        const elementValue = Object.values(el).map((el) => {
+                            return el
+                        })
+
+                        textareaElement.setAtrybute(...elementKey, ...elementValue)
+                        // jak przypisać keys i values do setAtrybute
+
+
+
                         break;
                     case "submit":
+                        const buttonElement = createElement("button")
+                        addChildToParent(generatedForm, buttonElement)
+                        addTextToElement(buttonElement, el.label)
                         break
                     default:
                         throw Error("Invalid element type")
 
                 }
             })
+
+
         }
     })
 
