@@ -11,13 +11,26 @@ const testSettings = {
     ]
 }
 
-
-
-
-
-const generateFormOnPattern = (settings: Object[]): any => {
-    const generatedForm = document.createElement("form")
-    
+interface ISettings {
+    action: string,
+    method: string,
+    inputs: Array<{ type: string }>
 }
 
-generateFormOnPattern([{}])
+
+
+
+
+const generateFormOnPattern = (settings: any): any => {
+    const generatedForm = document.createElement("form")
+    const arrySettings = Object.entries(settings)
+
+    arrySettings.reduce((acc, el) => {
+        const [key, value] = el
+        
+    }, 0)
+
+
+}
+
+generateFormOnPattern(testSettings)

@@ -146,9 +146,14 @@ var testSettings = {
 
 var generateFormOnPattern = function generateFormOnPattern(settings) {
   var generatedForm = document.createElement("form");
+  var arrySettings = Object.entries(settings);
+  arrySettings.reduce(function (acc, el) {
+    var key = el[0],
+        value = el[1];
+  }, 0);
 };
 
-generateFormOnPattern([{}]);
+generateFormOnPattern(testSettings);
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
