@@ -123,7 +123,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addAttributeToElement = exports.isParameterAnArray = void 0;
+exports.addAndCreateElement = exports.addAttributeToElement = exports.isParameterAnArray = void 0;
 
 var isParameterAnArray = function isParameterAnArray(parameter) {
   return Array.isArray(parameter);
@@ -136,6 +136,13 @@ var addAttributeToElement = function addAttributeToElement(mainElement, attribut
 };
 
 exports.addAttributeToElement = addAttributeToElement;
+
+var addAndCreateElement = function addAndCreateElement(mainElement, elementToCreate) {
+  var newElement = document.createElement(elementToCreate);
+  return mainElement.appendChild(newElement);
+};
+
+exports.addAndCreateElement = addAndCreateElement;
 },{}],"dynamicForm.ts":[function(require,module,exports) {
 "use strict";
 
@@ -170,24 +177,30 @@ var testSettings = {
 };
 
 var generateFormOnPattern = function generateFormOnPattern(settings) {
+  var wrapper = document.querySelector(".wrapper");
   var generatedForm = document.createElement("form");
+  wrapper.appendChild(generatedForm);
+  console.log(wrapper);
   var arraySettings = Object.entries(settings);
   var settingsVariables = arraySettings.map(function (el) {
     var key = el[0],
         value = el[1];
 
-    if (Array.isArray(value) !== true) {
+    if (utility_1.isParameterAnArray(value) !== true) {
       utility_1.addAttributeToElement(generatedForm, key, value);
     }
 
-    if (Array.isArray(value) === true) {
+    if (utility_1.isParameterAnArray(value) === true) {
       var arrayValue = value;
       arrayValue.map(function (el) {
         //problem z otypowaniem el obiekt ze stringami 
-        console.log(el.type);
-
         switch (el.type) {
           case "header":
+            // addAndCreateElement(generatedForm, "busdfdfsdgtton")
+            // console.log(generatedForm);
+            var newElement = document.createElement("h4");
+            generatedForm.appendChild(newElement);
+            console.log(generatedForm);
             break;
 
           case "email":

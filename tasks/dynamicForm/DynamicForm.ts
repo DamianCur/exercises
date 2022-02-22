@@ -1,4 +1,5 @@
-import { isParameterAnArray, addAttributeToElement } from "./utility"
+import { Body } from "node-fetch";
+import { isParameterAnArray, addAttributeToElement, addAndCreateElement } from "./utility"
 
 
 const testSettings = {
@@ -26,7 +27,13 @@ interface ISettings {
 
 
 const generateFormOnPattern = (settings: any): any => {
-    const generatedForm = document.createElement("form")
+    const wrapper = document.querySelector(".wrapper") as HTMLElement
+    const generatedForm = document.createElement("form") 
+    wrapper.appendChild(generatedForm)
+    console.log(wrapper);
+    
+   
+    
     const arraySettings = Object.entries(settings)
 
 
@@ -35,18 +42,26 @@ const generateFormOnPattern = (settings: any): any => {
 
         const [key, value] = el
 
-        if (Array.isArray(value) !== true) {
+        if (isParameterAnArray(value) !== true) {
             addAttributeToElement(generatedForm, key, value)
         }
 
-        if (Array.isArray(value) === true) {
+        if (isParameterAnArray(value) === true) {
             const arrayValue = value
 
             arrayValue.map((el: any) => {
                 //problem z otypowaniem el obiekt ze stringami 
-                console.log(el.type);
+                
+
+
                 switch (el.type) {
                     case "header":
+                        // addAndCreateElement(generatedForm, "busdfdfsdgtton")
+                        // console.log(generatedForm);
+
+                        const newElement = document.createElement("h4")
+                        generatedForm.appendChild(newElement)
+                        console.log(generatedForm);
                         break;
                     case "email":
                         break;
