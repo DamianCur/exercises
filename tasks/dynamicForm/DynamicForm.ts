@@ -10,3 +10,14 @@ const testSettings = {
         { type: 'submit', label: 'Wyślij wiadomość' }
     ]
 }
+
+
+
+
+
+const generateFormOnPattern = (settings: Object[]): any => {
+    const generatedForm = document.createElement("form")
+    
+}
+
+generateFormOnPattern([{}])

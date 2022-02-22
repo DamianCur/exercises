@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel tasks/getUrlParameters/index.html",
+    "dev": "parcel tasks/dynamicForm/index.html",
     "build": "parcel build index.html"
   },
   "keywords": [],
