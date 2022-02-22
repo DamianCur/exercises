@@ -30,6 +30,7 @@ class UrlParameters {
         const result = arr.reduce((acc: Record<string, any>, el, index): any => {
             const [parameter, value] = el
             
+            
             const isElementAnArray = parameter.includes("[")
 
             

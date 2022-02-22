@@ -1,3 +1,6 @@
+import { isParameterAnArray, addAttributeToElement } from "./utility"
+
+
 const testSettings = {
     action: '/contact/by-mail',
     method: 'POST',
@@ -15,6 +18,7 @@ interface ISettings {
     action: string,
     method: string,
     inputs: Array<{ type: string }>
+    //problem z otypowaniem inputs
 }
 
 
@@ -23,14 +27,31 @@ interface ISettings {
 
 const generateFormOnPattern = (settings: any): any => {
     const generatedForm = document.createElement("form")
-    const arrySettings = Object.entries(settings)
+    const arraySettings = Object.entries(settings)
 
-    arrySettings.reduce((acc, el) => {
+
+    const settingsVariables = arraySettings.map((el: any): any => {
+       
+
         const [key, value] = el
         
-    }, 0)
+        if(Array.isArray(value) !== true) {
+            addAttributeToElement(generatedForm, key, value)
+        }
+
+        //dodać logike w przypadku gdy element jest arrayem
+    })
+    
+    console.log(generatedForm);
+ 
+
+
 
 
 }
 
 generateFormOnPattern(testSettings)
+
+
+
+

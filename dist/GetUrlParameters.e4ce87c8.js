@@ -161,7 +161,7 @@ function () {
           var convertedStringToBoolen = value == "true";
           acc[parameter] = convertedStringToBoolen;
           break;
-        //sprawdzić warunki dlaczego zwraca Nana z operatorem !=
+        //sprawdzić warunki dlaczego zwraca Nana z operatorem !==
 
         case Number(value) === NaN:
           acc[parameter] = Number(value);
@@ -214,7 +214,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59468" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53386" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

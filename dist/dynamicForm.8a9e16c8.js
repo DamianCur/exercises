@@ -117,8 +117,33 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"dynamicForm.ts":[function(require,module,exports) {
+})({"utility.ts":[function(require,module,exports) {
 "use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addAttributeToElement = exports.isParameterAnArray = void 0;
+
+var isParameterAnArray = function isParameterAnArray(parameter) {
+  return Array.isArray(parameter);
+};
+
+exports.isParameterAnArray = isParameterAnArray;
+
+var addAttributeToElement = function addAttributeToElement(mainElement, attributeName, attribiuteValue) {
+  return mainElement.setAttribute(attributeName, attribiuteValue);
+};
+
+exports.addAttributeToElement = addAttributeToElement;
+},{}],"dynamicForm.ts":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var utility_1 = require("./utility");
 
 var testSettings = {
   action: '/contact/by-mail',
@@ -146,15 +171,21 @@ var testSettings = {
 
 var generateFormOnPattern = function generateFormOnPattern(settings) {
   var generatedForm = document.createElement("form");
-  var arrySettings = Object.entries(settings);
-  arrySettings.reduce(function (acc, el) {
+  var arraySettings = Object.entries(settings);
+  var settingsVariables = arraySettings.map(function (el) {
     var key = el[0],
         value = el[1];
-  }, 0);
+
+    if (Array.isArray(value) !== true) {
+      utility_1.addAttributeToElement(generatedForm, key, value);
+    } //dodać logike w przypadku gdy element jest arrayem
+
+  });
+  console.log(generatedForm);
 };
 
 generateFormOnPattern(testSettings);
-},{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./utility":"utility.ts"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -182,7 +213,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49754" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53582" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
