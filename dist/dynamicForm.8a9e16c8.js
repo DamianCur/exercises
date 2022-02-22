@@ -158,20 +158,6 @@ exports.addTextToElement = addTextToElement;
 },{}],"dynamicForm.ts":[function(require,module,exports) {
 "use strict";
 
-var __spreadArrays = this && this.__spreadArrays || function () {
-  for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
-    s += arguments[i].length;
-  }
-
-  for (var r = Array(s), k = 0, i = 0; i < il; i++) {
-    for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
-      r[k] = a[j];
-    }
-  }
-
-  return r;
-};
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -225,7 +211,7 @@ var generateFormOnPattern = function generateFormOnPattern(settings) {
             utility_1.addChildToParent(generatedForm, headerElement); //czy połączyć tworzenie i dodawanie elementu do jednej funkcji?
             //w jaki sposób dodać określić kolejność h4                        
 
-            utility_1.addTextToElement(headerElement, el.type);
+            utility_1.addTextToElement(headerElement, el.label);
             break;
 
           case "email":
@@ -243,8 +229,8 @@ var generateFormOnPattern = function generateFormOnPattern(settings) {
             });
             var elementValue = Object.values(el).map(function (el) {
               return el;
-            });
-            textareaElement.setAtrybute.apply(textareaElement, __spreadArrays(elementKey, elementValue)); // jak przypisać keys i values do setAtrybute
+            }); // textareaElement.setAtrybute(...elementKey, ...elementValue)
+            // jak przypisać keys i values do setAtrybute
 
             break;
 
@@ -260,6 +246,7 @@ var generateFormOnPattern = function generateFormOnPattern(settings) {
       });
     }
   });
+  console.log(wrapper);
 };
 
 generateFormOnPattern(testSettings);

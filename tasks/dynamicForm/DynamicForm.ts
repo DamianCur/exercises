@@ -61,7 +61,8 @@ const generateFormOnPattern = (settings: any): any => {
 
                         //czy połączyć tworzenie i dodawanie elementu do jednej funkcji?
                         //w jaki sposób dodać określić kolejność h4                        
-                        addTextToElement(headerElement, el.type)
+                        addTextToElement(headerElement, el.label)
+                        
                         break;
                     case "email":
                         const inputElement = createElement("input")
@@ -79,7 +80,7 @@ const generateFormOnPattern = (settings: any): any => {
                             return el
                         })
 
-                        textareaElement.setAtrybute(...elementKey, ...elementValue)
+                        // textareaElement.setAtrybute(...elementKey, ...elementValue)
                         // jak przypisać keys i values do setAtrybute
 
 
@@ -99,7 +100,8 @@ const generateFormOnPattern = (settings: any): any => {
 
         }
     })
-
+    
+    console.log(wrapper);
 
 
 
