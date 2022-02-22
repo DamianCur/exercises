@@ -7,11 +7,18 @@ const addAttributeToElement = (mainElement: HTMLElement, attributeName: string, 
     return mainElement.setAttribute(attributeName, attribiuteValue)
 }
 
-const addAndCreateElement = (mainElement: HTMLElement, elementToCreate: string) => {
+const createElement = (elementToCreate: string): any => {
     const newElement = document.createElement(elementToCreate)
-    return mainElement.appendChild(newElement)
+    return newElement
+}
 
+const addChildToParent = (parent: HTMLElement, child: HTMLElement) => {
+    return parent.appendChild(child)
+}
+
+const addTextToElement = (element: HTMLElement, textToAdd: string) => {
+    return element.innerHTML = textToAdd
 }
 
 
-export { isParameterAnArray, addAttributeToElement, addAndCreateElement }
+export { isParameterAnArray, addAttributeToElement, createElement, addChildToParent, addTextToElement }
