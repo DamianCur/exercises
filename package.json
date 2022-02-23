@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel tasks/dynamicForm/index.html",
+    "dev": "parcel tasks/DynamicTable-medium/index.html",
     "build": "parcel build index.html"
   },
   "keywords": [],
@@ -23,6 +23,7 @@
   "dependencies": {
     "@types/mock-fs": "^4.10.0",
     "axios": "^0.21.1",
+    "json-server": "^0.17.0",
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.14",
     "ts-node": "^10.4.0"
