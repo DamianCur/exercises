@@ -120,10 +120,24 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"utility.ts":[function(require,module,exports) {
 "use strict";
 
+var __spreadArrays = this && this.__spreadArrays || function () {
+  for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
+    s += arguments[i].length;
+  }
+
+  for (var r = Array(s), k = 0, i = 0; i < il; i++) {
+    for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
+      r[k] = a[j];
+    }
+  }
+
+  return r;
+};
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addTextToElement = exports.addChildToParent = exports.createElement = exports.addAttributeToElement = exports.isParameterAnArray = void 0;
+exports.arrayWithoutTypeProperty = exports.addTextToElement = exports.addChildToParent = exports.createElement = exports.addAttributeToElement = exports.isParameterAnArray = void 0;
 
 var isParameterAnArray = function isParameterAnArray(parameter) {
   return Array.isArray(parameter);
@@ -155,6 +169,20 @@ var addTextToElement = function addTextToElement(element, textToAdd) {
 };
 
 exports.addTextToElement = addTextToElement;
+
+var arrayWithoutTypeProperty = function arrayWithoutTypeProperty(element) {
+  var arrayElement = Object.entries(element);
+
+  var coppyOfArrayElement = __spreadArrays(arrayElement);
+
+  var indexOfTypeElement = coppyOfArrayElement.findIndex(function (el) {
+    return el.includes("type");
+  });
+  coppyOfArrayElement.splice(indexOfTypeElement, 1);
+  return coppyOfArrayElement;
+};
+
+exports.arrayWithoutTypeProperty = arrayWithoutTypeProperty;
 },{}],"dynamicForm.ts":[function(require,module,exports) {
 "use strict";
 
@@ -209,28 +237,36 @@ var generateFormOnPattern = function generateFormOnPattern(settings) {
             break;
 
           case "email":
-            var inputElement = utility_1.createElement("input"); // placeholder
+            element = utility_1.createElement("input");
+            utility_1.arrayWithoutTypeProperty(el);
+
+            var _a = utility_1.arrayWithoutTypeProperty(el).map(function (element) {
+              return element;
+            }),
+                attributeName = _a[0],
+                value_1 = _a[1]; //przypisać atrybuty do elementu
+            // placeholder
             // name
+
 
             break;
 
           case "textarea":
-            var textareaElement = utility_1.createElement("textarea"); // placeholder
+            element = utility_1.createElement("textarea"); // placeholder
             // name
 
             break;
 
           case "submit":
-            var buttonElement = utility_1.createElement("button");
-            utility_1.addChildToParent(generatedForm, buttonElement); // XXX
-
-            utility_1.addTextToElement(buttonElement, el.label || "Send mail");
+            element = utility_1.createElement("button");
+            utility_1.addTextToElement(element, el.label || "Send mail");
             break;
 
           default:
             throw Error("Invalid element type");
-        } // addChildToParent(generatedForm, element)
+        }
 
+        utility_1.addChildToParent(generatedForm, element);
       });
     } else {
       utility_1.addAttributeToElement(generatedForm, key, value);

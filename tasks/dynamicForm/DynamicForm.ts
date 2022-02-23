@@ -1,4 +1,4 @@
-import { isParameterAnArray, addAttributeToElement, createElement, addChildToParent, addTextToElement } from "./utility"
+import { isParameterAnArray, addAttributeToElement, createElement, addChildToParent, addTextToElement, arrayWithoutTypeProperty } from "./utility"
 
 
 const testSettings = {
@@ -14,10 +14,7 @@ const testSettings = {
     ]
 }
 
-// Record<string, string>
 
-// { name: 'content', placeholder: 'Wpisz treść wiadomości' }
-// Object.entries
 
 interface InputInterface {
     type: string; label?: string;
@@ -53,33 +50,46 @@ const generateFormOnPattern = (settings: ISettings): any => {
             const arrayValue = value as InputInterface[];
             arrayValue.forEach((el) => {
                 let element = null;
-                
+
                 switch (el.type) {
                     case "header":
                         element = createElement("h4")
                         addTextToElement(element, el.label || "Form title")
+
+
                         break;
                     case "email":
-                        const inputElement = createElement("input")
+                        element = createElement("input")
+                        arrayWithoutTypeProperty(el)
+                        
+                        const [attributeName, value] = arrayWithoutTypeProperty(el).map((element) => {
+                            
+                            return element
+                        })
+
+                        //przypisać atrybuty do elementu
+                        
+                        
                         // placeholder
                         // name
 
                         break;
                     case "textarea":
-                        const textareaElement = createElement("textarea")
+                        element = createElement("textarea")
 
                         // placeholder
                         // name
                         break;
                     case "submit":
-                        const buttonElement = createElement("button")
-                        addChildToParent(generatedForm, buttonElement) // XXX
-                        addTextToElement(buttonElement, el.label || "Send mail")
+                        element = createElement("button")
+
+                        addTextToElement(element, el.label || "Send mail")
                         break
                     default:
                         throw Error("Invalid element type")
                 }
-                // addChildToParent(generatedForm, element)
+
+                addChildToParent(generatedForm, element)
             })
         } else {
             addAttributeToElement(generatedForm, key, value)
@@ -96,6 +106,8 @@ const generateFormOnPattern = (settings: ISettings): any => {
 }
 
 generateFormOnPattern(testSettings)
+
+export { InputInterface }
 
 // DynamicTable
 
