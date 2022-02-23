@@ -1,3 +1,6 @@
+import { InputInterface } from "./dynamicForm"
+
+
 
 const isParameterAnArray = (parameter: [] | string) => {
     return Array.isArray(parameter)
@@ -20,5 +23,22 @@ const addTextToElement = (element: HTMLElement, textToAdd: string) => {
     return element.innerHTML = textToAdd
 }
 
+const arrayWithoutTypeProperty = (element: InputInterface) => {
 
-export { isParameterAnArray, addAttributeToElement, createElement, addChildToParent, addTextToElement }
+
+
+    const arrayElement = Object.entries(element)
+
+    const coppyOfArrayElement = [...arrayElement]
+
+    const indexOfTypeElement = coppyOfArrayElement.findIndex((el) => {
+        return el.includes("type")
+    })
+   coppyOfArrayElement.splice(indexOfTypeElement, 1)
+
+   
+
+    return coppyOfArrayElement
+}
+
+export { isParameterAnArray, addAttributeToElement, createElement, addChildToParent, addTextToElement, arrayWithoutTypeProperty }
