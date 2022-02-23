@@ -137,7 +137,7 @@ var __spreadArrays = this && this.__spreadArrays || function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.arrayWithoutTypeProperty = exports.addTextToElement = exports.addChildToParent = exports.createElement = exports.addAttributeToElement = exports.isParameterAnArray = void 0;
+exports.addAttributesToSpecifiedElement = exports.arrayWithoutTypeProperty = exports.addTextToElement = exports.addChildToParent = exports.createElement = exports.addAttributeToElement = exports.isParameterAnArray = void 0;
 
 var isParameterAnArray = function isParameterAnArray(parameter) {
   return Array.isArray(parameter);
@@ -183,6 +183,16 @@ var arrayWithoutTypeProperty = function arrayWithoutTypeProperty(element) {
 };
 
 exports.arrayWithoutTypeProperty = arrayWithoutTypeProperty;
+
+var addAttributesToSpecifiedElement = function addAttributesToSpecifiedElement(mainElement, dataElement) {
+  dataElement.forEach(function (el) {
+    var attributeName = el[0],
+        value = el[1];
+    addAttributeToElement(mainElement, attributeName, value); //o co chodzi z tym błędem?
+  });
+};
+
+exports.addAttributesToSpecifiedElement = addAttributesToSpecifiedElement;
 },{}],"dynamicForm.ts":[function(require,module,exports) {
 "use strict";
 
@@ -238,23 +248,12 @@ var generateFormOnPattern = function generateFormOnPattern(settings) {
 
           case "email":
             element = utility_1.createElement("input");
-            utility_1.arrayWithoutTypeProperty(el);
-
-            var _a = utility_1.arrayWithoutTypeProperty(el).map(function (element) {
-              return element;
-            }),
-                attributeName = _a[0],
-                value_1 = _a[1]; //przypisać atrybuty do elementu
-            // placeholder
-            // name
-
-
+            utility_1.addAttributesToSpecifiedElement(element, utility_1.arrayWithoutTypeProperty(el));
             break;
 
           case "textarea":
-            element = utility_1.createElement("textarea"); // placeholder
-            // name
-
+            element = utility_1.createElement("textarea");
+            utility_1.addAttributesToSpecifiedElement(element, utility_1.arrayWithoutTypeProperty(el));
             break;
 
           case "submit":

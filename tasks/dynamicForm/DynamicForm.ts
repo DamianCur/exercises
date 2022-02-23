@@ -1,4 +1,4 @@
-import { isParameterAnArray, addAttributeToElement, createElement, addChildToParent, addTextToElement, arrayWithoutTypeProperty } from "./utility"
+import { isParameterAnArray, addAttributeToElement, createElement, addChildToParent, addTextToElement, arrayWithoutTypeProperty, addAttributesToSpecifiedElement } from "./utility"
 
 
 const testSettings = {
@@ -60,25 +60,16 @@ const generateFormOnPattern = (settings: ISettings): any => {
                         break;
                     case "email":
                         element = createElement("input")
-                        arrayWithoutTypeProperty(el)
-                        
-                        const [attributeName, value] = arrayWithoutTypeProperty(el).map((element) => {
-                            
-                            return element
-                        })
 
-                        //przypisać atrybuty do elementu
-                        
-                        
-                        // placeholder
-                        // name
+                        addAttributesToSpecifiedElement(element, arrayWithoutTypeProperty(el))
 
                         break;
                     case "textarea":
                         element = createElement("textarea")
+                       
+                        addAttributesToSpecifiedElement(element, arrayWithoutTypeProperty(el))
 
-                        // placeholder
-                        // name
+                        
                         break;
                     case "submit":
                         element = createElement("button")

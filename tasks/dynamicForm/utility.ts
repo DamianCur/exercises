@@ -34,11 +34,21 @@ const arrayWithoutTypeProperty = (element: InputInterface) => {
     const indexOfTypeElement = coppyOfArrayElement.findIndex((el) => {
         return el.includes("type")
     })
-   coppyOfArrayElement.splice(indexOfTypeElement, 1)
+    coppyOfArrayElement.splice(indexOfTypeElement, 1)
 
-   
+
 
     return coppyOfArrayElement
 }
 
-export { isParameterAnArray, addAttributeToElement, createElement, addChildToParent, addTextToElement, arrayWithoutTypeProperty }
+const addAttributesToSpecifiedElement = (mainElement: HTMLElement, dataElement: String[][]) => {
+    dataElement.forEach((el) => {
+        const [attributeName, value] = el
+        addAttributeToElement(mainElement, attributeName, value)
+        //o co chodzi z tym błędem?
+    })
+}
+
+
+
+export { isParameterAnArray, addAttributeToElement, createElement, addChildToParent, addTextToElement, arrayWithoutTypeProperty, addAttributesToSpecifiedElement }
