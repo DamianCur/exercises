@@ -1,4 +1,3 @@
-import { Body } from "node-fetch";
 import { isParameterAnArray, addAttributeToElement, createElement, addChildToParent, addTextToElement } from "./utility"
 
 
@@ -15,92 +14,78 @@ const testSettings = {
     ]
 }
 
+// Record<string, string>
+
+// { name: 'content', placeholder: 'Wpisz treść wiadomości' }
+// Object.entries
+
+interface InputInterface {
+    type: string; label?: string;
+    placeholder?: string;
+    name?: string;
+}
+
 interface ISettings {
     action: string,
     method: string,
-    inputs: Array<{ type: string }>
-    //problem z otypowaniem inputs
+    inputs: Array<InputInterface>
+
 }
 
 
 
 
 
-const generateFormOnPattern = (settings: any): any => {
+const generateFormOnPattern = (settings: ISettings): any => {
     const wrapper = document.querySelector(".wrapper") as HTMLElement
     const generatedForm = document.createElement("form")
-    wrapper.appendChild(generatedForm)
+    wrapper.appendChild(generatedForm);
 
 
 
     const arraySettings = Object.entries(settings)
 
 
-    const settingsVariables = arraySettings.map((el: any): any => {
+    arraySettings.forEach((el) => {
+        const [key, value] = el;
 
-
-        const [key, value] = el
-
-        if (isParameterAnArray(value) !== true) {
-            addAttributeToElement(generatedForm, key, value)
-        }
-
-        if (isParameterAnArray(value) === true) {
-            const arrayValue = value
-
-            arrayValue.map((el: any, i: number) => {
-                //problem z otypowaniem el obiekt ze stringami 
-
-
+        if (isParameterAnArray(value)) {
+            const arrayValue = value as InputInterface[];
+            arrayValue.forEach((el) => {
+                let element = null;
+                
                 switch (el.type) {
                     case "header":
-
-
-                        const headerElement = createElement("h4")
-                        addChildToParent(generatedForm, headerElement)
-
-                        //czy połączyć tworzenie i dodawanie elementu do jednej funkcji?
-                        //w jaki sposób dodać określić kolejność h4                        
-                        addTextToElement(headerElement, el.label)
-                        
+                        element = createElement("h4")
+                        addTextToElement(element, el.label || "Form title")
                         break;
                     case "email":
                         const inputElement = createElement("input")
-                        addChildToParent(generatedForm, inputElement)
+                        // placeholder
+                        // name
+
                         break;
                     case "textarea":
                         const textareaElement = createElement("textarea")
-                        addChildToParent(generatedForm, textareaElement)
-                        //zautymatyzowanie dodawania atrybutów
-                        // jakiej logiki użyć do pozyskania elementu
-                        const elementKey = Object.keys(el).map((el) => {
-                            return el
-                        })
-                        const elementValue = Object.values(el).map((el) => {
-                            return el
-                        })
 
-                        // textareaElement.setAtrybute(...elementKey, ...elementValue)
-                        // jak przypisać keys i values do setAtrybute
-
-
-
+                        // placeholder
+                        // name
                         break;
                     case "submit":
                         const buttonElement = createElement("button")
-                        addChildToParent(generatedForm, buttonElement)
-                        addTextToElement(buttonElement, el.label)
+                        addChildToParent(generatedForm, buttonElement) // XXX
+                        addTextToElement(buttonElement, el.label || "Send mail")
                         break
                     default:
                         throw Error("Invalid element type")
-
                 }
+                // addChildToParent(generatedForm, element)
             })
-
-
+        } else {
+            addAttributeToElement(generatedForm, key, value)
         }
     })
-    
+
     console.log(wrapper);
 
 
@@ -112,6 +97,6 @@ const generateFormOnPattern = (settings: any): any => {
 
 generateFormOnPattern(testSettings)
 
-
+// DynamicTable
 
 

@@ -193,63 +193,53 @@ var generateFormOnPattern = function generateFormOnPattern(settings) {
   var generatedForm = document.createElement("form");
   wrapper.appendChild(generatedForm);
   var arraySettings = Object.entries(settings);
-  var settingsVariables = arraySettings.map(function (el) {
+  arraySettings.forEach(function (el) {
     var key = el[0],
         value = el[1];
 
-    if (utility_1.isParameterAnArray(value) !== true) {
-      utility_1.addAttributeToElement(generatedForm, key, value);
-    }
-
-    if (utility_1.isParameterAnArray(value) === true) {
+    if (utility_1.isParameterAnArray(value)) {
       var arrayValue = value;
-      arrayValue.map(function (el, i) {
-        //problem z otypowaniem el obiekt ze stringami 
+      arrayValue.forEach(function (el) {
+        var element = null;
+
         switch (el.type) {
           case "header":
-            var headerElement = utility_1.createElement("h4");
-            utility_1.addChildToParent(generatedForm, headerElement); //czy połączyć tworzenie i dodawanie elementu do jednej funkcji?
-            //w jaki sposób dodać określić kolejność h4                        
-
-            utility_1.addTextToElement(headerElement, el.label);
+            element = utility_1.createElement("h4");
+            utility_1.addTextToElement(element, el.label || "Form title");
             break;
 
           case "email":
-            var inputElement = utility_1.createElement("input");
-            utility_1.addChildToParent(generatedForm, inputElement);
+            var inputElement = utility_1.createElement("input"); // placeholder
+            // name
+
             break;
 
           case "textarea":
-            var textareaElement = utility_1.createElement("textarea");
-            utility_1.addChildToParent(generatedForm, textareaElement); //zautymatyzowanie dodawania atrybutów
-            // jakiej logiki użyć do pozyskania elementu
-
-            var elementKey = Object.keys(el).map(function (el) {
-              return el;
-            });
-            var elementValue = Object.values(el).map(function (el) {
-              return el;
-            }); // textareaElement.setAtrybute(...elementKey, ...elementValue)
-            // jak przypisać keys i values do setAtrybute
+            var textareaElement = utility_1.createElement("textarea"); // placeholder
+            // name
 
             break;
 
           case "submit":
             var buttonElement = utility_1.createElement("button");
-            utility_1.addChildToParent(generatedForm, buttonElement);
-            utility_1.addTextToElement(buttonElement, el.label);
+            utility_1.addChildToParent(generatedForm, buttonElement); // XXX
+
+            utility_1.addTextToElement(buttonElement, el.label || "Send mail");
             break;
 
           default:
             throw Error("Invalid element type");
-        }
+        } // addChildToParent(generatedForm, element)
+
       });
+    } else {
+      utility_1.addAttributeToElement(generatedForm, key, value);
     }
   });
   console.log(wrapper);
 };
 
-generateFormOnPattern(testSettings);
+generateFormOnPattern(testSettings); // DynamicTable
 },{"./utility":"utility.ts"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -278,7 +268,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54108" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51243" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
