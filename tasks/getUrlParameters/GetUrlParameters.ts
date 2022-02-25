@@ -33,16 +33,11 @@ class UrlParameters {
             
             const isElementAnArray = parameter.includes("[")
 
-            
-            
             switch (true) {
                 case isElementAnArray:
                     const arrValues = parameter.split("[")
                     const [arrayName, indexToFix] = arrValues
                     const valueIndex = indexToFix.slice(0, -1)
-
-                    
-
                    
                     if (acc[arrayName] === undefined) {
                         acc[arrayName] = []
@@ -54,8 +49,10 @@ class UrlParameters {
                     const convertedStringToBoolen = (value == "true")
                     acc[parameter] = convertedStringToBoolen
                     break;
-                    //sprawdzić warunki dlaczego zwraca Nana z operatorem !==
-                case Number(value) === NaN:
+                   
+                case Number.isFinite(Number(value)):
+                    
+                    console.log(value)
                     acc[parameter] = Number(value)
                     break;
                 default:
@@ -84,5 +81,4 @@ app.init()
 
 // dynamicForm
 
-
-
+// https://github.com/Localhost-Group/JS-TS-Fundamentals/blob/main/5.%20TS%20in%20HTML/zadania/TypingEffect-medium.md

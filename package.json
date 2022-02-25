@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel tasks/DynamicTable-medium/index.html",
+    "dev": "parcel tasks/getUrlParameters/index.html",
     "build": "parcel build index.html"
   },
   "keywords": [],

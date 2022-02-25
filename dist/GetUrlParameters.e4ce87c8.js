@@ -161,9 +161,9 @@ function () {
           var convertedStringToBoolen = value == "true";
           acc[parameter] = convertedStringToBoolen;
           break;
-        //sprawdzić warunki dlaczego zwraca Nana z operatorem !==
 
-        case Number(value) === NaN:
+        case Number.isFinite(Number(value)):
+          console.log(value);
           acc[parameter] = Number(value);
           break;
 
@@ -186,6 +186,7 @@ function () {
 
 var app = new UrlParameters();
 app.init(); // dynamicForm
+// https://github.com/Localhost-Group/JS-TS-Fundamentals/blob/main/5.%20TS%20in%20HTML/zadania/TypingEffect-medium.md
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -214,7 +215,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53386" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61945" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

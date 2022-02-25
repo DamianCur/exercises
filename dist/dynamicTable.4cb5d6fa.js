@@ -254,36 +254,45 @@ var tableData_json_1 = __importDefault(require("./tableData.json"));
 var utility_1 = require("./utility");
 
 var createTable = function createTable() {
-  var getDataKeys = Object.keys(tableData_json_1.default[0]); //czy data[0] to poprawny zapis?
+  // Klasa wrappera w argumencie "wrapper"
+  // Data jako argument
+  var wrapper = document.querySelector(".wrapper");
+  var table = utility_1.createElementAndAddClass("table", "wrapper__table");
+  var tableHead = utility_1.createElementAndAddClass("thead", "wrapper__tableHead");
+  var tableRowHead = utility_1.createElementAndAddClass("tr", "wrapper__tableRowHead");
+  var tableBody = utility_1.createElementAndAddClass("tbody", "wrapper__tableBody");
+  utility_1.addChildToParent(wrapper, table);
+  utility_1.addChildToParent(table, tableHead);
+  utility_1.addChildToParent(tableHead, tableRowHead);
+  utility_1.addChildToParent(table, tableBody); // X get w zmiennej
+  // const tableHead = createElementAndAddClass("thead", "wrapper__tableHead")
+  // const tableRowHead = createElementAndAddClass("tr", "wrapper__tableRowHead")
+
+  var getDataKeys = Object.keys(tableData_json_1.default[0]);
+  getDataKeys.forEach(function (dataKey) {
+    var tableHeader = utility_1.createElementAndAddClass("th", "wrapper__tableHeader");
+    tableHeader.innerText = dataKey;
+    utility_1.addChildToParent(tableRowHead, tableHeader);
+  }); // addChildToParent(table, tableHead)
+  // addChildToParent(tableHead, tableRowHead)
 
   var getDataValues = tableData_json_1.default.map(function (personData) {
     var personDataValues = Object.values(personData);
     return personDataValues;
-  });
-  var wrapper = document.querySelector(".wrapper");
-  var table = utility_1.createElementAndAddClass("table", "wrapper__table");
-  var tableHead = utility_1.createElementAndAddClass("thead", "wrapper__tableHead");
-  var tableRow = utility_1.createElementAndAddClass("tr", "wrapper__tableRowHead");
-  var tableBody = utility_1.createElementAndAddClass("tbody", "wrapper__tableBody");
-  utility_1.addChildToParent(wrapper, table);
-  utility_1.addChildToParent(table, tableHead);
-  utility_1.addChildToParent(tableHead, tableRow);
-  utility_1.addChildToParent(table, tableBody);
-  getDataKeys.forEach(function (dataKey) {
-    var tableHeader = utility_1.createElementAndAddClass("th", "wrapper__tableHeader");
-    tableHeader.innerText = dataKey;
-    utility_1.addChildToParent(tableRow, tableHeader);
-  });
+  }); // data.forEach Record<string, string | Array<string> | number>
+
   getDataValues.forEach(function (el) {
+    // const personDataValues = Object.values(personData)
     var tableRowData = utility_1.createElementAndAddClass("tr", "wrapper__tableRow");
-    utility_1.addChildToParent(tableBody, tableRowData);
     el.forEach(function (singleData) {
       var tableData = utility_1.createElementAndAddClass("td", "wrapper__tableData");
-      tableData.innerText = singleData;
+      tableData.innerText = String(singleData);
       utility_1.addChildToParent(tableRowData, tableData);
     });
+    utility_1.addChildToParent(tableBody, tableRowData);
   });
-};
+}; //dalaczego waunek wyrzuca NaNa w getUrlParameters
+
 
 createTable();
 },{"./tableData.json":"tableData.json","./utility":"utility.ts"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -314,7 +323,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62645" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49535" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
