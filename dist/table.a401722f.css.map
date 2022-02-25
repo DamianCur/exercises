@@ -1,1 +1,1 @@
-{"version":3,"sources":["table.css"],"names":[],"mappings":"AAAA","file":"table.a401722f.css","sourceRoot":"..\\tasks\\DynamicTable-medium","sourcesContent":[""]}
+{"version":3,"sources":["table.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA;AACA","file":"table.a401722f.css","sourceRoot":"..\\tasks\\DynamicTable-medium","sourcesContent":["body {\r\n    background-color: rgb(226, 226, 226);\r\n\r\n}\r\n\r\nth, td {\r\n    padding: 7px;\r\n    border: 1px solid black;\r\n    border-collapse: collapse;\r\n}"]}

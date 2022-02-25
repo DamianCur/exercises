@@ -1,2 +1,12 @@
+body {
+    background-color: rgb(226, 226, 226);
+
+}
+
+th, td {
+    padding: 7px;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
 
 /*# sourceMappingURL=/table.a401722f.css.map */
