@@ -210,29 +210,32 @@ module.exports = [{
   "tags": ["laboris", "ut", "et", "excepteur", "aliqua", "consequat", "labore"]
 }];
 },{}],"utility.ts":[function(require,module,exports) {
-"use strict"; // // const createAndAddElements = (parentElement: HTMLElement, elementToCreate: string, elementQuantity: number): any => {
-// for (let i = 0; i < elementQuantity; i++) {
-//     const childElement = document.createElement(elementToCreate)
-//     parentElement.appendChild(childElement)
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addChildToParent = exports.createElement = void 0; // }
-// }
+exports.addClassToElement = exports.addChildToParent = exports.createElementAndAddClass = void 0;
 
-var createElement = function createElement(elementToCreate) {
+var createElementAndAddClass = function createElementAndAddClass(elementToCreate, className) {
   var createdElement = document.createElement(elementToCreate);
+  addClassToElement(createdElement, className);
   return createdElement;
 };
 
-exports.createElement = createElement;
+exports.createElementAndAddClass = createElementAndAddClass;
 
 var addChildToParent = function addChildToParent(parent, child) {
   parent.appendChild(child);
 };
 
 exports.addChildToParent = addChildToParent;
+
+var addClassToElement = function addClassToElement(element, classToAdd) {
+  element.classList.add(classToAdd);
+};
+
+exports.addClassToElement = addClassToElement;
 },{}],"dynamicTable.ts":[function(require,module,exports) {
 "use strict";
 
@@ -253,11 +256,33 @@ var utility_1 = require("./utility");
 var createTable = function createTable() {
   var getDataKeys = Object.keys(tableData_json_1.default[0]); //czy data[0] to poprawny zapis?
 
+  var getDataValues = tableData_json_1.default.map(function (personData) {
+    var personDataValues = Object.values(personData);
+    return personDataValues;
+  });
   var wrapper = document.querySelector(".wrapper");
-  var table = utility_1.createElement("table");
-  var tableHead = utility_1.createElement("thead");
-  var tableRow = utility_1.createElement("tr");
-  console.log(getDataKeys);
+  var table = utility_1.createElementAndAddClass("table", "wrapper__table");
+  var tableHead = utility_1.createElementAndAddClass("thead", "wrapper__tableHead");
+  var tableRow = utility_1.createElementAndAddClass("tr", "wrapper__tableRowHead");
+  var tableBody = utility_1.createElementAndAddClass("tbody", "wrapper__tableBody");
+  utility_1.addChildToParent(wrapper, table);
+  utility_1.addChildToParent(table, tableHead);
+  utility_1.addChildToParent(tableHead, tableRow);
+  utility_1.addChildToParent(table, tableBody);
+  getDataKeys.forEach(function (dataKey) {
+    var tableHeader = utility_1.createElementAndAddClass("th", "wrapper__tableHeader");
+    tableHeader.innerText = dataKey;
+    utility_1.addChildToParent(tableRow, tableHeader);
+  });
+  getDataValues.forEach(function (el) {
+    var tableRowData = utility_1.createElementAndAddClass("tr", "wrapper__tableRow");
+    utility_1.addChildToParent(tableBody, tableRowData);
+    el.forEach(function (singleData) {
+      var tableData = utility_1.createElementAndAddClass("td", "wrapper__tableData");
+      tableData.innerText = singleData;
+      utility_1.addChildToParent(tableRowData, tableData);
+    });
+  });
 };
 
 createTable();
@@ -289,7 +314,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61800" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62645" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
