@@ -1,11 +1,16 @@
-import Typed from "typed.js";
 
 
 
 
-var typed = new Typed('.element', {
-    strings: ["First sentence.", "Second sentence."],
-    typeSpeed: 30
-});
+import Typed from 'typed.js';
 
-console.log(typed);
+var options = {
+    strings: ['Damian', 'Natalia'],
+    typeSpeed: 40,
+    backSpeed: 40,
+    loop: true,
+};
+
+var typed = new Typed('.animate', options);
+
+
