@@ -215,7 +215,7 @@ module.exports = [{
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.addClassToElement = exports.addChildToParent = exports.createElementAndAddClass = void 0;
+exports.addChildToParent = exports.createElementAndAddClass = void 0;
 
 var createElementAndAddClass = function createElementAndAddClass(elementToCreate, className) {
   var createdElement = document.createElement(elementToCreate);
@@ -234,8 +234,6 @@ exports.addChildToParent = addChildToParent;
 var addClassToElement = function addClassToElement(element, classToAdd) {
   element.classList.add(classToAdd);
 };
-
-exports.addClassToElement = addClassToElement;
 },{}],"dynamicTable.ts":[function(require,module,exports) {
 "use strict";
 
@@ -253,48 +251,41 @@ var tableData_json_1 = __importDefault(require("./tableData.json"));
 
 var utility_1 = require("./utility");
 
-var createTable = function createTable() {
+var createTable = function createTable(mainElementClassName, dataElement) {
   // Klasa wrappera w argumencie "wrapper"
   // Data jako argument
   var wrapper = document.querySelector(".wrapper");
-  var table = utility_1.createElementAndAddClass("table", "wrapper__table");
-  var tableHead = utility_1.createElementAndAddClass("thead", "wrapper__tableHead");
-  var tableRowHead = utility_1.createElementAndAddClass("tr", "wrapper__tableRowHead");
-  var tableBody = utility_1.createElementAndAddClass("tbody", "wrapper__tableBody");
+  var table = utility_1.createElementAndAddClass("table", mainElementClassName + "__table");
+  var tableBody = utility_1.createElementAndAddClass("tbody", mainElementClassName + "__tableBody");
   utility_1.addChildToParent(wrapper, table);
-  utility_1.addChildToParent(table, tableHead);
-  utility_1.addChildToParent(tableHead, tableRowHead);
-  utility_1.addChildToParent(table, tableBody); // X get w zmiennej
-  // const tableHead = createElementAndAddClass("thead", "wrapper__tableHead")
-  // const tableRowHead = createElementAndAddClass("tr", "wrapper__tableRowHead")
-
-  var getDataKeys = Object.keys(tableData_json_1.default[0]);
+  utility_1.addChildToParent(table, tableBody);
+  var tableHead = utility_1.createElementAndAddClass("thead", mainElementClassName + "__tableHead");
+  var tableRowHead = utility_1.createElementAndAddClass("tr", mainElementClassName + "__tableRowHead");
+  var getDataKeys = Object.keys(dataElement[0]);
   getDataKeys.forEach(function (dataKey) {
-    var tableHeader = utility_1.createElementAndAddClass("th", "wrapper__tableHeader");
+    var tableHeader = utility_1.createElementAndAddClass("th", mainElementClassName + "__tableHeader");
     tableHeader.innerText = dataKey;
     utility_1.addChildToParent(tableRowHead, tableHeader);
-  }); // addChildToParent(table, tableHead)
-  // addChildToParent(tableHead, tableRowHead)
-
-  var getDataValues = tableData_json_1.default.map(function (personData) {
+  });
+  utility_1.addChildToParent(table, tableHead);
+  utility_1.addChildToParent(tableHead, tableRowHead);
+  var getDataValues = dataElement.map(function (personData) {
     var personDataValues = Object.values(personData);
     return personDataValues;
-  }); // data.forEach Record<string, string | Array<string> | number>
-
+  });
   getDataValues.forEach(function (el) {
-    // const personDataValues = Object.values(personData)
-    var tableRowData = utility_1.createElementAndAddClass("tr", "wrapper__tableRow");
+    console.log(el);
+    var tableRowData = utility_1.createElementAndAddClass("tr", mainElementClassName + "__tableRow");
     el.forEach(function (singleData) {
-      var tableData = utility_1.createElementAndAddClass("td", "wrapper__tableData");
+      var tableData = utility_1.createElementAndAddClass("td", mainElementClassName + "__tableData");
       tableData.innerText = String(singleData);
       utility_1.addChildToParent(tableRowData, tableData);
     });
     utility_1.addChildToParent(tableBody, tableRowData);
   });
-}; //dalaczego waunek wyrzuca NaNa w getUrlParameters
+};
 
-
-createTable();
+createTable("wrapper", tableData_json_1.default);
 },{"./tableData.json":"tableData.json","./utility":"utility.ts"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -323,7 +314,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49535" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53395" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

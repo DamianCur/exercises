@@ -13,4 +13,4 @@ const addClassToElement = (element: HTMLElement, classToAdd: string) => {
 }
 
 
-export { createElementAndAddClass, addChildToParent, addClassToElement }
+export { createElementAndAddClass, addChildToParent }
