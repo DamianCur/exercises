@@ -1,54 +1,55 @@
 
-
 import data from "./tableData.json"
-import { createElementAndAddClass, addChildToParent, addClassToElement } from "./utility"
 
-const createTable = () => {
+import { createElementAndAddClass, addChildToParent } from "./utility"
+
+const createTable = (mainElementClassName: string, dataElement: any) => {
 
     // Klasa wrappera w argumencie "wrapper"
     // Data jako argument
-    const wrapper = document.querySelector(".wrapper") as HTMLElement
-    const table = createElementAndAddClass("table", `wrapper__table`)
+    const wrapper = document.querySelector(`.wrapper`) as HTMLElement
+    const table = createElementAndAddClass("table", `${mainElementClassName}__table`)
 
 
-    const tableHead = createElementAndAddClass("thead", "wrapper__tableHead")
-    const tableRowHead = createElementAndAddClass("tr", "wrapper__tableRowHead")
-    const tableBody = createElementAndAddClass("tbody", "wrapper__tableBody")
+
+    const tableBody = createElementAndAddClass("tbody", `${mainElementClassName}__tableBody`)
 
     addChildToParent(wrapper, table)
-    addChildToParent(table, tableHead)
-    addChildToParent(tableHead, tableRowHead)
+
     addChildToParent(table, tableBody)
 
-    // X get w zmiennej
-    // const tableHead = createElementAndAddClass("thead", "wrapper__tableHead")
-    // const tableRowHead = createElementAndAddClass("tr", "wrapper__tableRowHead")
-    const getDataKeys = Object.keys(data[0])
-    
+   
+    const tableHead = createElementAndAddClass("thead", `${mainElementClassName}__tableHead`)
+    const tableRowHead = createElementAndAddClass("tr", `${mainElementClassName}__tableRowHead`)
+
+    const getDataKeys = Object.keys(dataElement[0])
+
     getDataKeys.forEach((dataKey) => {
-        const tableHeader = createElementAndAddClass("th", "wrapper__tableHeader")
+        const tableHeader = createElementAndAddClass("th", `${mainElementClassName}__tableHeader`)
         tableHeader.innerText = dataKey
         addChildToParent(tableRowHead, tableHeader)
     })
+    
+    addChildToParent(table, tableHead)
+    addChildToParent(tableHead, tableRowHead)
+    
 
-    // addChildToParent(table, tableHead)
-    // addChildToParent(tableHead, tableRowHead)
-
-    const getDataValues = data.map((personData: Record<string, Array<string>>) => {
+    const getDataValues = dataElement.map((personData: Record<string, Array<string>>) => {
         const personDataValues = Object.values(personData)
-        
+
         return personDataValues
     })
 
-    // data.forEach Record<string, string | Array<string> | number>
+    
     getDataValues.forEach((el: string[][]) => {
-        // const personDataValues = Object.values(personData)
-        const tableRowData = createElementAndAddClass("tr", "wrapper__tableRow")
+       
+        console.log(el);
+        const tableRowData = createElementAndAddClass("tr", `${mainElementClassName}__tableRow`)
 
         el.forEach((singleData) => {
-            const tableData = createElementAndAddClass("td", "wrapper__tableData")
+            const tableData = createElementAndAddClass("td", `${mainElementClassName}__tableData`)
             tableData.innerText = String(singleData)
-            addChildToParent(tableRowData, tableData) 
+            addChildToParent(tableRowData, tableData)
         })
 
         addChildToParent(tableBody, tableRowData)
@@ -60,7 +61,7 @@ const createTable = () => {
 
 
 
-createTable()
+createTable("wrapper", data)
 
 
 
