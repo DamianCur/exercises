@@ -139,22 +139,29 @@ var testArray = ["Przykładowy string", "Coś tam", "coś coś"];
 var TypingEffect =
 /** @class */
 function () {
-  function TypingEffect(classOfanimateElement, arrayOfStringsToAnimate) {
+  function TypingEffect(classOfanimateElement, classOfAnimateElementParent, arrayOfStringsToAnimate) {
     this.classOfanimateElement = classOfanimateElement;
     this.arrayOfStringsToAnimate = arrayOfStringsToAnimate;
+    this.classOfAnimateElementParent = classOfAnimateElementParent;
   }
 
   TypingEffect.prototype.mainFunction = function () {
-    var parentElement = document.querySelector("." + this.classOfanimateElement);
-    var arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map(function (dataString) {
+    var elementToAnimate = document.querySelector("." + this.classOfanimateElement);
+    var arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map(function (dataString, i) {
       var splitedString = __spreadArrays(dataString);
 
-      console.log(splitedString);
+      var singleCharacters = splitedString.map(function (el, i) {
+        if (elementToAnimate.textContent.length < splitedString[i].length) {
+          console.log(i);
+          var element = "";
+          setInterval(function () {}, 1000);
+        }
+      });
     });
   };
 
   TypingEffect.prototype.appInit = function () {
-    var parentElement = document.querySelector("." + this.classOfanimateElement);
+    var parentElement = document.querySelector("." + this.classOfAnimateElementParent);
     var typingMark = document.createElement("span");
     typingMark.classList.add("typingMark");
     typingMark.innerText = "|";
@@ -167,7 +174,8 @@ function () {
   return TypingEffect;
 }();
 
-var test = new TypingEffect("test", testArray);
+var test = new TypingEffect("test", "paragraph", testArray);
+test.appInit();
 test.mainFunction();
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -197,7 +205,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51032" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64601" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

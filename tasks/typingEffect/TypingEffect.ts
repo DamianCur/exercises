@@ -3,21 +3,37 @@ const testArray = ["Przykładowy string", "Coś tam", "coś coś"]
 class TypingEffect {
     classOfanimateElement: string;
     arrayOfStringsToAnimate: string[]
+    classOfAnimateElementParent: string
 
 
-
-    constructor(classOfanimateElement: string, arrayOfStringsToAnimate: string[]) {
+    constructor(classOfanimateElement: string, classOfAnimateElementParent: string, arrayOfStringsToAnimate: string[]) {
         this.classOfanimateElement = classOfanimateElement
         this.arrayOfStringsToAnimate = arrayOfStringsToAnimate
+        this.classOfAnimateElementParent = classOfAnimateElementParent
 
     }
 
     mainFunction() {
-        const parentElement = document.querySelector(`.${this.classOfanimateElement}`)
+        const elementToAnimate = document.querySelector(`.${this.classOfanimateElement}`)
 
-        const arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map((dataString) => {
+
+        const arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map((dataString, i) => {
             const splitedString = [...dataString] as Array<string>
-            console.log(splitedString);
+            const singleCharacters = splitedString.map((el, i) => {
+                if (elementToAnimate.textContent.length < splitedString[i].length) {
+                    console.log(i);
+                    let element = "";
+
+                    setInterval(() => {
+
+
+                    }, 1000)
+
+                }
+            })
+
+
+
         })
 
 
@@ -26,7 +42,7 @@ class TypingEffect {
     }
 
     appInit() {
-        const parentElement = document.querySelector(`.${this.classOfanimateElement}`) as HTMLElement
+        const parentElement = document.querySelector(`.${this.classOfAnimateElementParent}`) as HTMLElement
 
         const typingMark = document.createElement("span")
         typingMark.classList.add("typingMark")
@@ -41,7 +57,8 @@ class TypingEffect {
 }
 
 
-const test = new TypingEffect("test", testArray)
+const test = new TypingEffect("test", "paragraph", testArray)
+test.appInit()
 test.mainFunction()
 
 
