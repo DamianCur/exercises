@@ -1,4 +1,4 @@
-
+const testArray = ["Przykładowy string", "Coś tam", "coś coś"]
 
 class TypingEffect {
     classOfanimateElement: string;
@@ -9,6 +9,19 @@ class TypingEffect {
     constructor(classOfanimateElement: string, arrayOfStringsToAnimate: string[]) {
         this.classOfanimateElement = classOfanimateElement
         this.arrayOfStringsToAnimate = arrayOfStringsToAnimate
+
+    }
+
+    mainFunction() {
+        const parentElement = document.querySelector(`.${this.classOfanimateElement}`)
+
+        const arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map((dataString) => {
+            const splitedString = [...dataString] as Array<string>
+            console.log(splitedString);
+        })
+
+
+
 
     }
 
@@ -28,8 +41,8 @@ class TypingEffect {
 }
 
 
-const test = new TypingEffect("test", [])
-test.appInit()
+const test = new TypingEffect("test", testArray)
+test.mainFunction()
 
 
 
