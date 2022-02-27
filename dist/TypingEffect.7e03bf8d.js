@@ -129,14 +129,21 @@ function () {
   }
 
   TypingEffect.prototype.appInit = function () {
-    var cursor = document.querySelector(".typingMark");
+    var parentElement = document.querySelector("." + this.classOfanimateElement);
+    var typingMark = document.createElement("span");
+    typingMark.classList.add("typingMark");
+    typingMark.innerText = "|";
+    parentElement.appendChild(typingMark);
     setInterval(function () {
-      cursor.classList.toggle("typingMarkActive");
-    });
+      typingMark.classList.toggle("typingMarkActive");
+    }, 400);
   };
 
   return TypingEffect;
 }();
+
+var test = new TypingEffect("test", []);
+test.appInit();
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
