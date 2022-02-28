@@ -18,16 +18,8 @@ div {
 
 .typingMark::after {
     content: "|";
-    display: inline-block;
-    opacity: 1;
-    transition: .2s;
-    animation: typingMark 1s ease infinite;
+    animation: typingMark 1.2s ease infinite;
 }
-
-/* .typingMark.typingMarkActive {
-    opacity: 0;
-} */
-
 
 @keyframes typingMark {
     0% {

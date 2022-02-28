@@ -133,29 +133,20 @@ function () {
 
   TypingEffect.prototype.mainFunction = function () {
     var elementToAnimate = document.querySelector("." + this.classOfanimateElement);
-    console.log(elementToAnimate);
     if (elementToAnimate === null) throw new Error("Element is null");
     if (elementToAnimate.textContent === null) throw new Error("Element content is null");
     var elementText = elementToAnimate.textContent;
-    console.log(this.arrayOfStringsToAnimate);
     var arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map(function (dataString) {
       var splitedString = dataString.split("");
-      console.log(splitedString);
-      console.log(dataString);
-      var singleCharacters = splitedString.map(function (el, i) {
-        // el === splitedString[i]
-        console.log(i < splitedString.length); // console.log(splitedString[i].length)
 
-        if (elementText.length < splitedString.length) {// 0 < 1
-          // let element = "";
-          // setInterval(() => {
-          // }, 1000)
-        }
-      }); //rekurencja
-      // actualIndex, elementArray
-      // actualIndex === elementLength
-      // elementToAnimate.textContent += elementArray[actualIndex] 
-      // rekurencja(actualIndex + 1, elementArray)
+      var recurention = function recurention(actualIndex, elementArray) {
+        if (actualIndex === elementArray.length) return;
+        elementToAnimate.textContent += elementArray[actualIndex];
+        var newIndex = actualIndex + 1;
+        recurention(newIndex, elementArray);
+      };
+
+      recurention(0, splitedString);
     });
   };
 

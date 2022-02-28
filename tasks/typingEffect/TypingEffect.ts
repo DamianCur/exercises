@@ -15,37 +15,40 @@ class TypingEffect {
 
     mainFunction() {
         const elementToAnimate = document.querySelector(`.${this.classOfanimateElement}`)
-        console.log(elementToAnimate)
+
         if (elementToAnimate === null) throw new Error("Element is null")
         if (elementToAnimate.textContent === null) throw new Error("Element content is null")
         const elementText = elementToAnimate.textContent;
-        console.log(this.arrayOfStringsToAnimate)
+
 
 
         const arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map((dataString) => {
-            const splitedString = dataString.split("")
-            console.log(splitedString)
-            console.log(dataString);
-            const singleCharacters = splitedString.map((el, i) => {
-                // el === splitedString[i]
-                console.log(i < splitedString.length)
-                // console.log(splitedString[i].length)
-                if (elementText.length < splitedString.length) {
-                    // 0 < 1
+            const splitedString = dataString.split("");
 
-                    // let element = "";
-                    // setInterval(() => {
-                    // }, 1000)
-                }
-            })
 
-//rekurencja
-            // actualIndex, elementArray
-                // actualIndex === elementLength
-                // elementToAnimate.textContent += elementArray[actualIndex] 
-                // rekurencja(actualIndex + 1, elementArray)
+
+            const recurention = (actualIndex: number, elementArray: Array<string>) => {
+                if (actualIndex === elementArray.length) return
+                elementToAnimate.textContent += elementArray[actualIndex]
+
+                
+                const newIndex = actualIndex + 1;
+                
+
+                recurention(newIndex, elementArray)
+
+            }
+            recurention(0, splitedString)
         })
+
+
+
+
     }
+
+
+
+
 
     appInit() {
         const parentElement = document.querySelector(`.${this.classOfAnimateElementParent}`) as HTMLElement
