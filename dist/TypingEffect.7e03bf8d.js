@@ -120,20 +120,6 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"TypingEffect.ts":[function(require,module,exports) {
 "use strict";
 
-var __spreadArrays = this && this.__spreadArrays || function () {
-  for (var s = 0, i = 0, il = arguments.length; i < il; i++) {
-    s += arguments[i].length;
-  }
-
-  for (var r = Array(s), k = 0, i = 0; i < il; i++) {
-    for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) {
-      r[k] = a[j];
-    }
-  }
-
-  return r;
-};
-
 var testArray = ["Przykładowy string", "Coś tam", "coś coś"];
 
 var TypingEffect =
@@ -141,42 +127,67 @@ var TypingEffect =
 function () {
   function TypingEffect(classOfanimateElement, classOfAnimateElementParent, arrayOfStringsToAnimate) {
     this.classOfanimateElement = classOfanimateElement;
-    this.arrayOfStringsToAnimate = arrayOfStringsToAnimate;
     this.classOfAnimateElementParent = classOfAnimateElementParent;
+    this.arrayOfStringsToAnimate = arrayOfStringsToAnimate; // ...
   }
 
   TypingEffect.prototype.mainFunction = function () {
     var elementToAnimate = document.querySelector("." + this.classOfanimateElement);
-    var arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map(function (dataString, i) {
-      var splitedString = __spreadArrays(dataString);
-
+    console.log(elementToAnimate);
+    if (elementToAnimate === null) throw new Error("Element is null");
+    if (elementToAnimate.textContent === null) throw new Error("Element content is null");
+    var elementText = elementToAnimate.textContent;
+    console.log(this.arrayOfStringsToAnimate);
+    var arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map(function (dataString) {
+      var splitedString = dataString.split("");
+      console.log(splitedString);
+      console.log(dataString);
       var singleCharacters = splitedString.map(function (el, i) {
-        if (elementToAnimate.textContent.length < splitedString[i].length) {
-          console.log(i);
-          var element = "";
-          setInterval(function () {}, 1000);
+        // el === splitedString[i]
+        console.log(i < splitedString.length); // console.log(splitedString[i].length)
+
+        if (elementText.length < splitedString.length) {// 0 < 1
+          // let element = "";
+          // setInterval(() => {
+          // }, 1000)
         }
-      });
+      }); //rekurencja
+      // actualIndex, elementArray
+      // actualIndex === elementLength
+      // elementToAnimate.textContent += elementArray[actualIndex] 
+      // rekurencja(actualIndex + 1, elementArray)
     });
   };
 
   TypingEffect.prototype.appInit = function () {
     var parentElement = document.querySelector("." + this.classOfAnimateElementParent);
-    var typingMark = document.createElement("span");
+    var typingMark = document.createElement("span"); // paragraph::after content: "|" + animacja
+
     typingMark.classList.add("typingMark");
-    typingMark.innerText = "|";
-    parentElement.appendChild(typingMark);
+    typingMark.innerText = "|"; // 
+
     setInterval(function () {
       typingMark.classList.toggle("typingMarkActive");
-    }, 400);
+    }, 400); // css animation keyframes
+
+    parentElement.appendChild(typingMark);
+    this.mainFunction();
   };
 
   return TypingEffect;
 }();
 
-var test = new TypingEffect("test", "paragraph", testArray);
-test.appInit();
-test.mainFunction();
+var test = new TypingEffect("test", "paragraph", testArray); // "Przykładowy string"
+
+test.appInit(); // const fn = (givenNumber: number) => {
+//     console.log(givenNumber);
+//     if (givenNumber === 10) return;
+//     const newNumber = givenNumber + 1
+//     fn(newNumber)
+// }
+// fn(0)
+// const text = 'abcdef'
+// const editedText = text.slice(0, -1) //'abcde'
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -205,7 +216,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64601" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64907" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
