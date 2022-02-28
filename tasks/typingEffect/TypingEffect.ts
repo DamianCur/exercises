@@ -52,10 +52,6 @@ class TypingEffect {
 
         const typingMark = document.createElement("span") // paragraph::after content: "|" + animacja
         typingMark.classList.add("typingMark")
-        typingMark.innerText = "|" // 
-        setInterval(() => {
-            typingMark.classList.toggle("typingMarkActive")
-        }, 400) // css animation keyframes
         parentElement.appendChild(typingMark)
         this.mainFunction()
 

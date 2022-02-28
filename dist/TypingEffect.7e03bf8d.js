@@ -164,12 +164,6 @@ function () {
     var typingMark = document.createElement("span"); // paragraph::after content: "|" + animacja
 
     typingMark.classList.add("typingMark");
-    typingMark.innerText = "|"; // 
-
-    setInterval(function () {
-      typingMark.classList.toggle("typingMarkActive");
-    }, 400); // css animation keyframes
-
     parentElement.appendChild(typingMark);
     this.mainFunction();
   };
@@ -216,7 +210,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64907" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52858" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

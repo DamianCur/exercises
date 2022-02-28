@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     background-color: grey;
 }
@@ -15,14 +16,33 @@ div {
     letter-spacing: 1px;
 }
 
-.typingMark {
+.typingMark::after {
+    content: "|";
     display: inline-block;
     opacity: 1;
     transition: .2s;
+    animation: typingMark 1s ease infinite;
 }
 
-.typingMark.typingMarkActive {
+/* .typingMark.typingMarkActive {
     opacity: 0;
-}
+} */
 
-/* animation */
+
+@keyframes typingMark {
+    0% {
+        opacity: 0;
+    }
+
+    45% {
+        opacity: 0;
+    }
+
+    46% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
