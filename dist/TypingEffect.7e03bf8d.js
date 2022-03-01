@@ -133,21 +133,37 @@ function () {
 
   TypingEffect.prototype.mainFunction = function () {
     var elementToAnimate = document.querySelector("." + this.classOfanimateElement);
-    if (elementToAnimate === null) throw new Error("Element is null");
-    if (elementToAnimate.textContent === null) throw new Error("Element content is null");
-    var elementText = elementToAnimate.textContent;
-    var arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map(function (dataString) {
-      var splitedString = dataString.split("");
+    console.log(elementToAnimate.classList); // if (elementToAnimate === null) throw new Error("Element is null")
+    // if (elementToAnimate.textContent === null) throw new Error("Element content is null")
+    // const arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map((dataString) => {
+    //     const splitedString = dataString.split("");
+    //     const recurention = (actualIndex: number, elementArray: Array<string>) => {
+    //         if (actualIndex === elementArray.length) return
+    //         setTimeout(() => {
+    //             elementToAnimate.textContent += elementArray[actualIndex]
+    //         }, 4000)
+    //         const newIndex = actualIndex + 1;
+    //         recurention(newIndex, elementArray)
+    //     }
+    //     recurention(0, splitedString)
+    // })
 
-      var recurention = function recurention(actualIndex, elementArray) {
-        if (actualIndex === elementArray.length) return;
-        elementToAnimate.textContent += elementArray[actualIndex];
-        var newIndex = actualIndex + 1;
-        recurention(newIndex, elementArray);
-      };
+    var activeLetter = 0;
+    var activeText = 0;
+    elementToAnimate.textContent += this.arrayOfStringsToAnimate[activeText][activeLetter];
+    activeLetter++;
 
-      recurention(0, splitedString);
-    });
+    if (activeLetter === this.arrayOfStringsToAnimate[activeText].length) {
+      activeText++;
+
+      if (activeText === this.arrayOfStringsToAnimate.length) {
+        return;
+      }
+
+      activeLetter = 0;
+    }
+
+    setTimeout(this.mainFunction, 500);
   };
 
   TypingEffect.prototype.appInit = function () {
@@ -162,9 +178,7 @@ function () {
   return TypingEffect;
 }();
 
-var test = new TypingEffect("test", "paragraph", testArray); // "Przykładowy string"
-
-test.appInit(); // const fn = (givenNumber: number) => {
+var appTest = new TypingEffect("test", "paragraph", testArray); // const fn = (givenNumber: number) => {
 //     console.log(givenNumber);
 //     if (givenNumber === 10) return;
 //     const newNumber = givenNumber + 1
@@ -201,7 +215,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52858" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57499" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

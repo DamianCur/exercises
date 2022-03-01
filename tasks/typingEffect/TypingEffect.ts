@@ -13,37 +13,56 @@ class TypingEffect {
         // ...
     }
 
-    mainFunction() {
+    mainFunction(prevActiveLetter = 0) {
         const elementToAnimate = document.querySelector(`.${this.classOfanimateElement}`)
+        
 
-        if (elementToAnimate === null) throw new Error("Element is null")
-        if (elementToAnimate.textContent === null) throw new Error("Element content is null")
-        const elementText = elementToAnimate.textContent;
-
-
-
-        const arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map((dataString) => {
-            const splitedString = dataString.split("");
+        // if (elementToAnimate === null) throw new Error("Element is null")
+        // if (elementToAnimate.textContent === null) throw new Error("Element content is null")
 
 
 
-            const recurention = (actualIndex: number, elementArray: Array<string>) => {
-                if (actualIndex === elementArray.length) return
-                elementToAnimate.textContent += elementArray[actualIndex]
 
-                
-                const newIndex = actualIndex + 1;
-                
+        // const arrayOfSplitedStrings = this.arrayOfStringsToAnimate.map((dataString) => {
+        //     const splitedString = dataString.split("");
 
-                recurention(newIndex, elementArray)
 
+
+        //     const recurention = (actualIndex: number, elementArray: Array<string>) => {
+        //         if (actualIndex === elementArray.length) return
+
+        //         setTimeout(() => {
+
+        //             elementToAnimate.textContent += elementArray[actualIndex]
+        //         }, 4000)
+
+
+        //         const newIndex = actualIndex + 1;
+
+
+        //         recurention(newIndex, elementArray)
+
+        //     }
+        //     recurention(0, splitedString)
+        // })
+
+
+
+        let activeLetter = prevActiveLetter;
+        let activeText = 0;
+        elementToAnimate.textContent += this.arrayOfStringsToAnimate[activeText][activeLetter]
+        activeLetter++
+
+        if (activeLetter === this.arrayOfStringsToAnimate[activeText].length) {
+            activeText++
+
+            if(activeText === this.arrayOfStringsToAnimate.length){
+                return
             }
-            recurention(0, splitedString)
-        })
-
-
-
-
+            activeLetter = 0
+        }
+        
+        setTimeout(() => this.mainFunction(activeLetter), 500)
     }
 
 
@@ -62,8 +81,7 @@ class TypingEffect {
 }
 
 
-const test = new TypingEffect("test", "paragraph", testArray) // "Przykładowy string"
-test.appInit()
+const appTest = new TypingEffect("test", "paragraph", testArray)
 
 // const fn = (givenNumber: number) => {
 //     console.log(givenNumber);

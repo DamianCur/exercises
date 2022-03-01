@@ -117,79 +117,63 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"../../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
+})({"typingEffectV2.0.ts":[function(require,module,exports) {
+"use strict";
 
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
+var tekstArray = ["tekst1", "tekst2", "tekst3"];
+
+var TypingEffectV20 =
+/** @class */
+function () {
+  function TypingEffectV20(animateElementClass, textToAnimate, classOfElementAddTypingMark, activeLetter, activeText) {
+    this.animateElementClass = animateElementClass;
+    this.textToAnimate = textToAnimate;
+    this.classOfElementAddTypingMark = classOfElementAddTypingMark;
+    this.activeLetter = activeLetter;
+    this.activeText = activeText;
   }
 
-  return bundleURL;
-}
+  TypingEffectV20.prototype.mainFunction = function () {
+    var _this = this;
 
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+    var animateElement = document.querySelector("." + this.animateElementClass); // console.log(this.animateElementClass);
+    // console.log(this.textToAnimate[this.activeText][this.activeLetter]);
+    // if (this.animateElement === null) throw Error("Animate element connot be null");
+    // if (animateElement.textContent === null) throw Error("Element content is null")
+    //dlaczcego animate element jest nullem?
 
-    if (matches) {
-      return getBaseURL(matches[0]);
+    animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter];
+    this.activeLetter++;
+    if (this.activeLetter === this.textToAnimate[this.activeText].length) return;
+    var timeoutId = setTimeout(function () {
+      _this.mainFunction();
+
+      clearTimeout(timeoutId);
+    }, 400);
+
+    if (this.activeLetter === this.textToAnimate[this.activeText].length - 1) {
+      console.log("test");
     }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
   };
 
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
+  TypingEffectV20.prototype.addTypingMark = function () {
+    var parentElement = document.querySelector("." + this.classOfElementAddTypingMark);
+    var typingMark = document.createElement("span");
+    typingMark.classList.add("typingMark");
+    parentElement.appendChild(typingMark);
+  };
 
-var cssTimeout = null;
+  TypingEffectV20.prototype.appInit = function () {
+    this.addTypingMark();
+    this.mainFunction();
+  };
 
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
+  return TypingEffectV20;
+}();
 
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"../../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.css":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"_css_loader":"../../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var testAppV20 = new TypingEffectV20("animateSpan", tekstArray, "paragraph", 0, 0);
+testAppV20.appInit();
+},{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -393,5 +377,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
-//# sourceMappingURL=/style.e308ff8e.js.map
+},{}]},{},["../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","typingEffectV2.0.ts"], null)
+//# sourceMappingURL=/typingEffectV2.0.94c2171d.js.map
