@@ -4,54 +4,48 @@ class TypingEffectV20 {
 
     animateElementClass: string;
     textToAnimate: string[]
-    classOfElementAddTypingMark: string
-    activeLetter: number
-    activeText: number
+    activeLetter: number = 0
+    activeText: number = 0
+    animateElement: HTMLElement
 
 
-    constructor(animateElementClass: string, textToAnimate: string[], classOfElementAddTypingMark: string, activeLetter: number, activeText: number) {
+    constructor(animateElementClass: string, textToAnimate: string[]) {
         this.animateElementClass = animateElementClass;
         this.textToAnimate = textToAnimate
-        this.classOfElementAddTypingMark = classOfElementAddTypingMark
-        this.activeLetter = activeLetter
-        this.activeText = activeText
+        this.animateElement = document.querySelector(`.${this.animateElementClass}`)
     }
 
 
     mainFunction() {
-        const animateElement = document.querySelector(`.${this.animateElementClass}`)
 
-        animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter]
+        if (this.animateElement.textContent === null || this.animateElement === null) throw new Error("")
 
-
+        this.animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter]
         this.activeLetter++;
 
         if (this.activeLetter === this.textToAnimate[this.activeText].length) {
-            // return
-            let deleteCounter = this.activeLetter
-
+            // da się skrócić
             const deleteCharacterTimeout = setTimeout(() => {
                 this.deleteText()
-                //problem z uzyskaniem petli
-                clearTimeout(deleteCharacterTimeout)
-
-            }, 400)
-
-
-
-
-
-
-
-            return
+                // clearTimeout(deleteCharacterTimeout)
+                
+            }, 1000)
+            
         };
+        
+        if (this.activeLetter < this.textToAnimate[this.activeText].length) {
+            const timeoutId = setTimeout(() => {
+                this.mainFunction();
+                // clearTimeout(timeoutId);
+            }, 400)
+        }
+        
+        this.activeText++
+        this.activeLetter = 0
 
+        //w którym miejscu powinno nastąpić zwiekszenie indeksu tekstu oraz zerowanie indeksu liery?
+        
 
-
-        const timeoutId = setTimeout(() => {
-            this.mainFunction();
-            clearTimeout(timeoutId);
-        }, 400)
 
 
 
@@ -59,43 +53,37 @@ class TypingEffectV20 {
 
 
     deleteText() {
-        const animateElement = document.querySelector(`.${this.animateElementClass}`)
 
-        const deleyAfterString = setTimeout(() => {
-            //OPOZNIENIE PO WYKONANIU CALEGO STRINGA
-            //logika odejmowania liter slice() || substract? || -= || charAt()??
-            clearTimeout(deleyAfterString)
-        }, 1000)
+        if (this.animateElement.textContent === null) throw Error("Element is null")
 
-        setTimeout(() => {
+        const deletedText = this.animateElement.textContent.slice(0, -1)
+        this.animateElement.textContent = deletedText
+        this.activeLetter--
 
-            const deletedText = animateElement.textContent.slice(0,-1) // = "1"
-            animateElement.textContent = deletedText
-            this.activeLetter--
+
+        // ...
+        this.activeText++
+
+        const timeoutId = setTimeout(() => {
+            this.deleteText();
+            clearTimeout(timeoutId);
         }, 400)
 
 
-
     }
 
-
-
-    addTypingMark() {
-        const parentElement = document.querySelector(`.${this.classOfElementAddTypingMark}`) as HTMLElement
-
-        const typingMark = document.createElement("span")
-        typingMark.classList.add("typingMark")
-        parentElement.appendChild(typingMark)
-    }
 
 
     appInit() {
-        this.addTypingMark()
         this.mainFunction()
     }
 }
 
 
-const testAppV20 = new TypingEffectV20("animateSpan", tekstArray, "paragraph", 0, 0)
+const testAppV20 = new TypingEffectV20("animateSpan", tekstArray) // { timeoutTime: 400, writingType: "letter" | "word" }
 testAppV20.appInit()
 
+
+
+
+    // trackMeNow-medium

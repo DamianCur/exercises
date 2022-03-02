@@ -16,7 +16,8 @@ div {
     letter-spacing: 1px;
 }
 
-.typingMark::after {
+/* typingMark */
+.animateSpan::after {
     content: "|";
     animation: typingMark 1.2s ease infinite;
 }

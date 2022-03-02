@@ -125,75 +125,68 @@ var tekstArray = ["tekst1", "tekst2", "tekst3"];
 var TypingEffectV20 =
 /** @class */
 function () {
-  function TypingEffectV20(animateElementClass, textToAnimate, classOfElementAddTypingMark, activeLetter, activeText) {
+  function TypingEffectV20(animateElementClass, textToAnimate) {
+    this.activeLetter = 0;
+    this.activeText = 0;
     this.animateElementClass = animateElementClass;
     this.textToAnimate = textToAnimate;
-    this.classOfElementAddTypingMark = classOfElementAddTypingMark;
-    this.activeLetter = activeLetter;
-    this.activeText = activeText;
+    this.animateElement = document.querySelector("." + this.animateElementClass);
   }
 
   TypingEffectV20.prototype.mainFunction = function () {
     var _this = this;
 
-    var animateElement = document.querySelector("." + this.animateElementClass);
-    animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter];
+    if (this.animateElement.textContent === null || this.animateElement === null) throw new Error("");
+    this.animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter];
     this.activeLetter++;
 
     if (this.activeLetter === this.textToAnimate[this.activeText].length) {
-      // return
-      var deleteCounter = this.activeLetter;
-      var deleteCharacterTimeout_1 = setTimeout(function () {
-        _this.deleteText(); //problem z uzyskaniem petli
+      // da się skrócić
+      var deleteCharacterTimeout = setTimeout(function () {
+        _this.deleteText(); // clearTimeout(deleteCharacterTimeout)
 
-
-        clearTimeout(deleteCharacterTimeout_1);
-      }, 400);
-      return;
+      }, 1000);
     }
 
     ;
-    var timeoutId = setTimeout(function () {
-      _this.mainFunction();
 
-      clearTimeout(timeoutId);
-    }, 400);
+    if (this.activeLetter < this.textToAnimate[this.activeText].length) {
+      var timeoutId = setTimeout(function () {
+        _this.mainFunction(); // clearTimeout(timeoutId);
+
+      }, 400);
+    }
+
+    this.activeText++;
+    this.activeLetter = 0; //w którym miejscu powinno nastąpić zwiekszenie indeksu tekstu oraz zerowanie indeksu liery?
   };
 
   TypingEffectV20.prototype.deleteText = function () {
     var _this = this;
 
-    var animateElement = document.querySelector("." + this.animateElementClass);
-    var deleyAfterString = setTimeout(function () {
-      //OPOZNIENIE PO WYKONANIU CALEGO STRINGA
-      //logika odejmowania liter slice() || substract? || -= || charAt()??
-      clearTimeout(deleyAfterString);
-    }, 1000);
-    setTimeout(function () {
-      var deletedText = animateElement.textContent.slice(0, -1); // = "1"
+    if (this.animateElement.textContent === null) throw Error("Element is null");
+    var deletedText = this.animateElement.textContent.slice(0, -1);
+    this.animateElement.textContent = deletedText;
+    this.activeLetter--; // ...
 
-      animateElement.textContent = deletedText;
-      _this.activeLetter--;
+    this.activeText++;
+    var timeoutId = setTimeout(function () {
+      _this.deleteText();
+
+      clearTimeout(timeoutId);
     }, 400);
   };
 
-  TypingEffectV20.prototype.addTypingMark = function () {
-    var parentElement = document.querySelector("." + this.classOfElementAddTypingMark);
-    var typingMark = document.createElement("span");
-    typingMark.classList.add("typingMark");
-    parentElement.appendChild(typingMark);
-  };
-
   TypingEffectV20.prototype.appInit = function () {
-    this.addTypingMark();
     this.mainFunction();
   };
 
   return TypingEffectV20;
 }();
 
-var testAppV20 = new TypingEffectV20("animateSpan", tekstArray, "paragraph", 0, 0);
-testAppV20.appInit();
+var testAppV20 = new TypingEffectV20("animateSpan", tekstArray); // { timeoutTime: 400, writingType: "letter" | "word" }
+
+testAppV20.appInit(); // trackMeNow-medium
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -222,7 +215,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51791" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58373" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
