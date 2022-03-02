@@ -20,6 +20,13 @@ class TypingEffectV20 {
 
         if (this.animateElement.textContent === null || this.animateElement === null) throw new Error("")
 
+        if (this.activeLetter === this.textToAnimate[this.activeText].length) {
+            this.activeText++
+            this.activeLetter = 0
+            this.mainFunction()
+            //problem z ponownym wykonaniem pętli przy kolejnych stringach
+        }
+
         this.animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter]
         this.activeLetter++;
 
@@ -28,23 +35,21 @@ class TypingEffectV20 {
             const deleteCharacterTimeout = setTimeout(() => {
                 this.deleteText()
                 // clearTimeout(deleteCharacterTimeout)
-                
+
             }, 1000)
-            
+
         };
-        
+
         if (this.activeLetter < this.textToAnimate[this.activeText].length) {
             const timeoutId = setTimeout(() => {
                 this.mainFunction();
                 // clearTimeout(timeoutId);
             }, 400)
         }
-        
-        this.activeText++
-        this.activeLetter = 0
+
+
 
         //w którym miejscu powinno nastąpić zwiekszenie indeksu tekstu oraz zerowanie indeksu liery?
-        
 
 
 

@@ -137,6 +137,13 @@ function () {
     var _this = this;
 
     if (this.animateElement.textContent === null || this.animateElement === null) throw new Error("");
+
+    if (this.activeLetter === this.textToAnimate[this.activeText].length) {
+      this.activeText++;
+      this.activeLetter = 0;
+      this.mainFunction(); //problem z ponownym wykonaniem pętli przy kolejnych stringach
+    }
+
     this.animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter];
     this.activeLetter++;
 
@@ -155,10 +162,8 @@ function () {
         _this.mainFunction(); // clearTimeout(timeoutId);
 
       }, 400);
-    }
+    } //w którym miejscu powinno nastąpić zwiekszenie indeksu tekstu oraz zerowanie indeksu liery?
 
-    this.activeText++;
-    this.activeLetter = 0; //w którym miejscu powinno nastąpić zwiekszenie indeksu tekstu oraz zerowanie indeksu liery?
   };
 
   TypingEffectV20.prototype.deleteText = function () {
@@ -215,7 +220,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58373" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62431" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
