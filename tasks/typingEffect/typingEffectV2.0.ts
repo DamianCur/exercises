@@ -20,19 +20,33 @@ class TypingEffectV20 {
 
     mainFunction() {
         const animateElement = document.querySelector(`.${this.animateElementClass}`)
-        // console.log(this.animateElementClass);
 
-        // console.log(this.textToAnimate[this.activeText][this.activeLetter]);
-
-
-        // if (this.animateElement === null) throw Error("Animate element connot be null");
-        // if (animateElement.textContent === null) throw Error("Element content is null")
-        //dlaczcego animate element jest nullem?
         animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter]
 
 
         this.activeLetter++;
-        if (this.activeLetter === this.textToAnimate[this.activeText].length) return;
+
+        if (this.activeLetter === this.textToAnimate[this.activeText].length) {
+            // return
+            let deleteCounter = this.activeLetter
+
+            const deleteCharacterTimeout = setTimeout(() => {
+                this.deleteText()
+                //problem z uzyskaniem petli
+                clearTimeout(deleteCharacterTimeout)
+
+            }, 400)
+
+
+
+
+
+
+
+            return
+        };
+
+
 
         const timeoutId = setTimeout(() => {
             this.mainFunction();
@@ -41,12 +55,25 @@ class TypingEffectV20 {
 
 
 
+    }
 
-        if (this.activeLetter === this.textToAnimate[this.activeText].length - 1) {
-            console.log("test");
 
-           
-        }
+    deleteText() {
+        const animateElement = document.querySelector(`.${this.animateElementClass}`)
+
+        const deleyAfterString = setTimeout(() => {
+            //OPOZNIENIE PO WYKONANIU CALEGO STRINGA
+            //logika odejmowania liter slice() || substract? || -= || charAt()??
+            clearTimeout(deleyAfterString)
+        }, 1000)
+
+        setTimeout(() => {
+
+            const deletedText = animateElement.textContent.slice(0,-1) // = "1"
+            animateElement.textContent = deletedText
+            this.activeLetter--
+        }, 400)
+
 
 
     }

@@ -136,24 +136,45 @@ function () {
   TypingEffectV20.prototype.mainFunction = function () {
     var _this = this;
 
-    var animateElement = document.querySelector("." + this.animateElementClass); // console.log(this.animateElementClass);
-    // console.log(this.textToAnimate[this.activeText][this.activeLetter]);
-    // if (this.animateElement === null) throw Error("Animate element connot be null");
-    // if (animateElement.textContent === null) throw Error("Element content is null")
-    //dlaczcego animate element jest nullem?
-
+    var animateElement = document.querySelector("." + this.animateElementClass);
     animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter];
     this.activeLetter++;
-    if (this.activeLetter === this.textToAnimate[this.activeText].length) return;
+
+    if (this.activeLetter === this.textToAnimate[this.activeText].length) {
+      // return
+      var deleteCounter = this.activeLetter;
+      var deleteCharacterTimeout_1 = setTimeout(function () {
+        _this.deleteText(); //problem z uzyskaniem petli
+
+
+        clearTimeout(deleteCharacterTimeout_1);
+      }, 400);
+      return;
+    }
+
+    ;
     var timeoutId = setTimeout(function () {
       _this.mainFunction();
 
       clearTimeout(timeoutId);
     }, 400);
+  };
 
-    if (this.activeLetter === this.textToAnimate[this.activeText].length - 1) {
-      console.log("test");
-    }
+  TypingEffectV20.prototype.deleteText = function () {
+    var _this = this;
+
+    var animateElement = document.querySelector("." + this.animateElementClass);
+    var deleyAfterString = setTimeout(function () {
+      //OPOZNIENIE PO WYKONANIU CALEGO STRINGA
+      //logika odejmowania liter slice() || substract? || -= || charAt()??
+      clearTimeout(deleyAfterString);
+    }, 1000);
+    setTimeout(function () {
+      var deletedText = animateElement.textContent.slice(0, -1); // = "1"
+
+      animateElement.textContent = deletedText;
+      _this.activeLetter--;
+    }, 400);
   };
 
   TypingEffectV20.prototype.addTypingMark = function () {
@@ -201,7 +222,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57499" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51791" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
