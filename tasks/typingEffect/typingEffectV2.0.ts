@@ -7,11 +7,13 @@ class TypingEffectV20 {
     activeLetter: number = 0
     activeText: number = 0
     animateElement: HTMLElement
+    writingSpeed: number
 
 
-    constructor(animateElementClass: string, textToAnimate: string[]) {
+    constructor(animateElementClass: string, textToAnimate: string[], writingSpeed: number) {
         this.animateElementClass = animateElementClass;
         this.textToAnimate = textToAnimate
+        this.writingSpeed = writingSpeed
         this.animateElement = document.querySelector(`.${this.animateElementClass}`)
     }
 
@@ -19,35 +21,38 @@ class TypingEffectV20 {
     mainFunction() {
 
         if (this.animateElement.textContent === null || this.animateElement === null) throw new Error("")
+        if (this.writingSpeed < 0) throw Error("This number have to be positive.")
 
-        if (this.activeLetter === this.textToAnimate[this.activeText].length) {
-            this.activeText++
-            this.activeLetter = 0
-            this.mainFunction()
-            //problem z ponownym wykonaniem pętli przy kolejnych stringach
+        for (let i = 0; i < this.textToAnimate.length; i++) {
+
+            if (this.activeLetter === this.textToAnimate[this.activeText].length) {
+                this.activeText++
+                this.activeLetter = 0
+                // this.mainFunction()
+                //problem z ponownym wykonaniem pętli przy kolejnych stringach
+            }
+
+            this.animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter]
+            this.activeLetter++;
+
+            if (this.activeLetter === this.textToAnimate[this.activeText].length) {
+                // da się skrócić
+                const deleteCharacterTimeout = setTimeout(() => {
+                    this.deleteText()
+                    // clearTimeout(deleteCharacterTimeout)
+
+                }, 1000)
+
+            };
+
+            if (this.activeLetter < this.textToAnimate[this.activeText].length) {
+                const timeoutId = setTimeout(() => {
+                    this.mainFunction();
+                    // clearTimeout(timeoutId);
+                }, this.writingSpeed)
+            }
+
         }
-
-        this.animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter]
-        this.activeLetter++;
-
-        if (this.activeLetter === this.textToAnimate[this.activeText].length) {
-            // da się skrócić
-            const deleteCharacterTimeout = setTimeout(() => {
-                this.deleteText()
-                // clearTimeout(deleteCharacterTimeout)
-
-            }, 1000)
-
-        };
-
-        if (this.activeLetter < this.textToAnimate[this.activeText].length) {
-            const timeoutId = setTimeout(() => {
-                this.mainFunction();
-                // clearTimeout(timeoutId);
-            }, 400)
-        }
-
-
 
         //w którym miejscu powinno nastąpić zwiekszenie indeksu tekstu oraz zerowanie indeksu liery?
 
@@ -72,7 +77,7 @@ class TypingEffectV20 {
         const timeoutId = setTimeout(() => {
             this.deleteText();
             clearTimeout(timeoutId);
-        }, 400)
+        }, this.writingSpeed)
 
 
     }
@@ -80,12 +85,15 @@ class TypingEffectV20 {
 
 
     appInit() {
+
         this.mainFunction()
+
+
     }
 }
 
 
-const testAppV20 = new TypingEffectV20("animateSpan", tekstArray) // { timeoutTime: 400, writingType: "letter" | "word" }
+const testAppV20 = new TypingEffectV20("animateSpan", tekstArray, 400) // { timeoutTime: 400, writingType: "letter" | "word" }
 testAppV20.appInit()
 
 

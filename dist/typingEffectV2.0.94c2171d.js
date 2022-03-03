@@ -125,11 +125,12 @@ var tekstArray = ["tekst1", "tekst2", "tekst3"];
 var TypingEffectV20 =
 /** @class */
 function () {
-  function TypingEffectV20(animateElementClass, textToAnimate) {
+  function TypingEffectV20(animateElementClass, textToAnimate, writingSpeed) {
     this.activeLetter = 0;
     this.activeText = 0;
     this.animateElementClass = animateElementClass;
     this.textToAnimate = textToAnimate;
+    this.writingSpeed = writingSpeed;
     this.animateElement = document.querySelector("." + this.animateElementClass);
   }
 
@@ -137,31 +138,34 @@ function () {
     var _this = this;
 
     if (this.animateElement.textContent === null || this.animateElement === null) throw new Error("");
+    if (this.writingSpeed < 0) throw Error("This number have to be positive.");
 
-    if (this.activeLetter === this.textToAnimate[this.activeText].length) {
-      this.activeText++;
-      this.activeLetter = 0;
-      this.mainFunction(); //problem z ponownym wykonaniem pętli przy kolejnych stringach
-    }
+    for (var i = 0; i < this.textToAnimate.length; i++) {
+      if (this.activeLetter === this.textToAnimate[this.activeText].length) {
+        this.activeText++;
+        this.activeLetter = 0; // this.mainFunction()
+        //problem z ponownym wykonaniem pętli przy kolejnych stringach
+      }
 
-    this.animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter];
-    this.activeLetter++;
+      this.animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter];
+      this.activeLetter++;
 
-    if (this.activeLetter === this.textToAnimate[this.activeText].length) {
-      // da się skrócić
-      var deleteCharacterTimeout = setTimeout(function () {
-        _this.deleteText(); // clearTimeout(deleteCharacterTimeout)
+      if (this.activeLetter === this.textToAnimate[this.activeText].length) {
+        // da się skrócić
+        var deleteCharacterTimeout = setTimeout(function () {
+          _this.deleteText(); // clearTimeout(deleteCharacterTimeout)
 
-      }, 1000);
-    }
+        }, 1000);
+      }
 
-    ;
+      ;
 
-    if (this.activeLetter < this.textToAnimate[this.activeText].length) {
-      var timeoutId = setTimeout(function () {
-        _this.mainFunction(); // clearTimeout(timeoutId);
+      if (this.activeLetter < this.textToAnimate[this.activeText].length) {
+        var timeoutId = setTimeout(function () {
+          _this.mainFunction(); // clearTimeout(timeoutId);
 
-      }, 400);
+        }, this.writingSpeed);
+      }
     } //w którym miejscu powinno nastąpić zwiekszenie indeksu tekstu oraz zerowanie indeksu liery?
 
   };
@@ -179,7 +183,7 @@ function () {
       _this.deleteText();
 
       clearTimeout(timeoutId);
-    }, 400);
+    }, this.writingSpeed);
   };
 
   TypingEffectV20.prototype.appInit = function () {
@@ -189,7 +193,7 @@ function () {
   return TypingEffectV20;
 }();
 
-var testAppV20 = new TypingEffectV20("animateSpan", tekstArray); // { timeoutTime: 400, writingType: "letter" | "word" }
+var testAppV20 = new TypingEffectV20("animateSpan", tekstArray, 400); // { timeoutTime: 400, writingType: "letter" | "word" }
 
 testAppV20.appInit(); // trackMeNow-medium
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -220,7 +224,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62431" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53442" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
