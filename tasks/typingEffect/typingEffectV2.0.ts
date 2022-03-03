@@ -8,17 +8,40 @@ class TypingEffectV20 {
     activeText: number = 0
     animateElement: HTMLElement
     writingSpeed: number
+    typingStyle: string
+    avaliableKeys: {}
 
 
-    constructor(animateElementClass: string, textToAnimate: string[], writingSpeed: number) {
+    constructor(animateElementClass: string, textToAnimate: string[], writingSpeed: number, typingStyle: string) {
         this.animateElementClass = animateElementClass;
         this.textToAnimate = textToAnimate
         this.writingSpeed = writingSpeed
+        this.typingStyle = typingStyle
         this.animateElement = document.querySelector(`.${this.animateElementClass}`)
+
+
     }
 
 
     mainFunction() {
+
+        const avaliableKeysTypingStyle = ["typeByChar", "typeByWord"];
+        if (!avaliableKeysTypingStyle.includes(this.typingStyle)) throw Error("Invalid typing style key.")
+
+        const typingStyle = this.typingStyle
+
+
+        let textToAnimateStyle;
+
+        if (typingStyle === "typeByChar") {
+
+            textToAnimateStyle = this.textToAnimate[this.activeText][this.activeLetter]
+
+        } else if (typingStyle === "typeByWord") {
+
+            textToAnimateStyle = this.textToAnimate[this.activeText]
+
+        }
 
         if (this.animateElement.textContent === null || this.animateElement === null) throw new Error("")
         if (this.writingSpeed < 0) throw Error("This number have to be positive.")
@@ -32,7 +55,7 @@ class TypingEffectV20 {
                 //problem z ponownym wykonaniem pętli przy kolejnych stringach
             }
 
-            this.animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter]
+            this.animateElement.textContent += textToAnimateStyle
             this.activeLetter++;
 
             if (this.activeLetter === this.textToAnimate[this.activeText].length) {
@@ -93,7 +116,7 @@ class TypingEffectV20 {
 }
 
 
-const testAppV20 = new TypingEffectV20("animateSpan", tekstArray, 400) // { timeoutTime: 400, writingType: "letter" | "word" }
+const testAppV20 = new TypingEffectV20("animateSpan", tekstArray, 400, "typeByWord") // { timeoutTime: 400, writingType: "letter" | "word" }
 testAppV20.appInit()
 
 

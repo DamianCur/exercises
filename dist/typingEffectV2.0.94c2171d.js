@@ -125,17 +125,29 @@ var tekstArray = ["tekst1", "tekst2", "tekst3"];
 var TypingEffectV20 =
 /** @class */
 function () {
-  function TypingEffectV20(animateElementClass, textToAnimate, writingSpeed) {
+  function TypingEffectV20(animateElementClass, textToAnimate, writingSpeed, typingStyle) {
     this.activeLetter = 0;
     this.activeText = 0;
     this.animateElementClass = animateElementClass;
     this.textToAnimate = textToAnimate;
     this.writingSpeed = writingSpeed;
+    this.typingStyle = typingStyle;
     this.animateElement = document.querySelector("." + this.animateElementClass);
   }
 
   TypingEffectV20.prototype.mainFunction = function () {
     var _this = this;
+
+    var avaliableKeysTypingStyle = ["typeByChar", "typeByWord"];
+    if (!avaliableKeysTypingStyle.includes(this.typingStyle)) throw Error("Invalid typing style key.");
+    var typingStyle = this.typingStyle;
+    var textToAnimateStyle;
+
+    if (typingStyle === "typeByChar") {
+      textToAnimateStyle = this.textToAnimate[this.activeText][this.activeLetter];
+    } else if (typingStyle === "typeByWord") {
+      textToAnimateStyle = this.textToAnimate[this.activeText];
+    }
 
     if (this.animateElement.textContent === null || this.animateElement === null) throw new Error("");
     if (this.writingSpeed < 0) throw Error("This number have to be positive.");
@@ -147,7 +159,7 @@ function () {
         //problem z ponownym wykonaniem pętli przy kolejnych stringach
       }
 
-      this.animateElement.textContent += this.textToAnimate[this.activeText][this.activeLetter];
+      this.animateElement.textContent += textToAnimateStyle;
       this.activeLetter++;
 
       if (this.activeLetter === this.textToAnimate[this.activeText].length) {
@@ -193,7 +205,7 @@ function () {
   return TypingEffectV20;
 }();
 
-var testAppV20 = new TypingEffectV20("animateSpan", tekstArray, 400); // { timeoutTime: 400, writingType: "letter" | "word" }
+var testAppV20 = new TypingEffectV20("animateSpan", tekstArray, 400, "typeByWord"); // { timeoutTime: 400, writingType: "letter" | "word" }
 
 testAppV20.appInit(); // trackMeNow-medium
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
