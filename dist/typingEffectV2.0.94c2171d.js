@@ -120,77 +120,91 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 })({"typingEffectV2.0.ts":[function(require,module,exports) {
 "use strict";
 
-var tekstArray = ["tekst1", "tekst2", "tekst3"];
+var tekstArray = ["tekst1", "tekst2", "tekst3"]; // POST
+// fetch("google.pl", { strength: 101 }).then((data) => data.json()).then((data) => { console.log(data) }).catch((err) => { console.log(err) })
 
 var TypingEffectV20 =
 /** @class */
 function () {
+  // avaliableKeys: {}
   function TypingEffectV20(animateElementClass, textToAnimate, writingSpeed, typingStyle) {
     this.activeLetter = 0;
     this.activeText = 0;
-    this.animateElementClass = animateElementClass;
+    var elementToAnimate = document.querySelector("." + animateElementClass);
+    if ((elementToAnimate === null || elementToAnimate === void 0 ? void 0 : elementToAnimate.textContent) === null || elementToAnimate === null) throw new Error("");
+    if (writingSpeed < 0) throw Error("This number have to be positive.");
     this.textToAnimate = textToAnimate;
     this.writingSpeed = writingSpeed;
     this.typingStyle = typingStyle;
-    this.animateElement = document.querySelector("." + this.animateElementClass);
+    this.animateElement = elementToAnimate;
   }
 
   TypingEffectV20.prototype.mainFunction = function () {
     var _this = this;
 
-    var avaliableKeysTypingStyle = ["typeByChar", "typeByWord"];
-    if (!avaliableKeysTypingStyle.includes(this.typingStyle)) throw Error("Invalid typing style key.");
-    var typingStyle = this.typingStyle;
     var textToAnimateStyle;
 
-    if (typingStyle === "typeByChar") {
+    if (this.typingStyle === "typeByChar") {
       textToAnimateStyle = this.textToAnimate[this.activeText][this.activeLetter];
-    } else if (typingStyle === "typeByWord") {
+    } else if (this.typingStyle === "typeByWord") {
       textToAnimateStyle = this.textToAnimate[this.activeText];
+    } // "tekst1" / 1
+    // "Ala ma kota".split(" ") / 3
+    // console.log(this.textToAnimate[this.activeText].length);
+
+
+    this.animateElement.textContent += textToAnimateStyle;
+    this.activeLetter++;
+
+    if (this.activeLetter === 1) {
+      // da się skrócić
+      var deleteCharacterTimeout_1 = setTimeout(function () {
+        _this.deleteText();
+
+        clearTimeout(deleteCharacterTimeout_1);
+      }, 3000);
     }
 
-    if (this.animateElement.textContent === null || this.animateElement === null) throw new Error("");
-    if (this.writingSpeed < 0) throw Error("This number have to be positive.");
+    ;
 
-    for (var i = 0; i < this.textToAnimate.length; i++) {
-      if (this.activeLetter === this.textToAnimate[this.activeText].length) {
-        this.activeText++;
-        this.activeLetter = 0; // this.mainFunction()
-        //problem z ponownym wykonaniem pętli przy kolejnych stringach
-      }
+    if (this.activeLetter < 1) {
+      var timeoutId_1 = setTimeout(function () {
+        _this.mainFunction();
 
-      this.animateElement.textContent += textToAnimateStyle;
-      this.activeLetter++;
-
-      if (this.activeLetter === this.textToAnimate[this.activeText].length) {
-        // da się skrócić
-        var deleteCharacterTimeout = setTimeout(function () {
-          _this.deleteText(); // clearTimeout(deleteCharacterTimeout)
-
-        }, 1000);
-      }
-
-      ;
-
-      if (this.activeLetter < this.textToAnimate[this.activeText].length) {
-        var timeoutId = setTimeout(function () {
-          _this.mainFunction(); // clearTimeout(timeoutId);
-
-        }, this.writingSpeed);
-      }
+        clearTimeout(timeoutId_1);
+      }, this.writingSpeed);
     } //w którym miejscu powinno nastąpić zwiekszenie indeksu tekstu oraz zerowanie indeksu liery?
 
-  };
+  }; // "Ala ma kota"
+  //
+
 
   TypingEffectV20.prototype.deleteText = function () {
     var _this = this;
 
-    if (this.animateElement.textContent === null) throw Error("Element is null");
-    var deletedText = this.animateElement.textContent.slice(0, -1);
-    this.animateElement.textContent = deletedText;
-    this.activeLetter--; // ...
+    if (this.animateElement.textContent === null) throw Error("Element is null"); // const deletedText = this.animateElement.textContent.slice(0, -1)
 
-    this.activeText++;
+    this.animateElement.textContent = "";
+    this.activeLetter--; // console.log(this.activeLetter)
+    // ...
+    // this.activeText++
+    // console.log(this.activeLetter)
+
+    if (this.activeLetter > this.textToAnimate.length - 1) {
+      console.log("KONIEC DZIAŁANIA");
+      return;
+    }
+
+    if (this.activeLetter === 0) {
+      // this.mainFunction()
+      var deleteCharacterTimeout_2 = setTimeout(function () {
+        _this.activeText++; // console.log(this.activeText)
+        // this.mainFunction()
+
+        clearTimeout(deleteCharacterTimeout_2);
+      }, 3000);
+    }
+
     var timeoutId = setTimeout(function () {
       _this.deleteText();
 
@@ -205,9 +219,10 @@ function () {
   return TypingEffectV20;
 }();
 
-var testAppV20 = new TypingEffectV20("animateSpan", tekstArray, 400, "typeByWord"); // { timeoutTime: 400, writingType: "letter" | "word" }
+var testAppV20 = new TypingEffectV20("animateSpan", tekstArray, 2000, "typeByWord"); // { timeoutTime: 400, writingType: "letter" | "word" }
 
 testAppV20.appInit(); // trackMeNow-medium
+//asynchroniczność
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -236,7 +251,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53442" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65040" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
