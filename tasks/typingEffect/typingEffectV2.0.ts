@@ -124,3 +124,5 @@ testAppV20.appInit()
 
     // trackMeNow-medium
 //asynchroniczność
+//local/session storage
+//fetch xml get respond
