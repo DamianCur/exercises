@@ -199,17 +199,20 @@ function () {
       // this.mainFunction()
       var deleteCharacterTimeout_2 = setTimeout(function () {
         _this.activeText++; // console.log(this.activeText)
-        // this.mainFunction()
+
+        _this.mainFunction();
 
         clearTimeout(deleteCharacterTimeout_2);
-      }, 3000);
+      }, 3000); // return;
     }
 
-    var timeoutId = setTimeout(function () {
-      _this.deleteText();
+    if (this.activeLetter > 0) {
+      var timeoutId_2 = setTimeout(function () {
+        _this.deleteText();
 
-      clearTimeout(timeoutId);
-    }, this.writingSpeed);
+        clearTimeout(timeoutId_2);
+      }, this.writingSpeed);
+    }
   };
 
   TypingEffectV20.prototype.appInit = function () {
@@ -221,8 +224,9 @@ function () {
 
 var testAppV20 = new TypingEffectV20("animateSpan", tekstArray, 2000, "typeByWord"); // { timeoutTime: 400, writingType: "letter" | "word" }
 
-testAppV20.appInit(); // trackMeNow-medium
-//asynchroniczność
+testAppV20.appInit(); // trackMeNow-medium //asynchroniczność
+//local/session storage
+//fetch xml get respond
 },{}],"../../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -251,7 +255,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65040" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58830" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

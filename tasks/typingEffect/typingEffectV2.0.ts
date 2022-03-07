@@ -17,9 +17,9 @@ class TypingEffectV20 {
     // avaliableKeys: {}
 
 
-    constructor(animateElementClass: string, textToAnimate: string[], writingSpeed: number, typingStyle: TypingStyleType) { 
-        const elementToAnimate =  document.querySelector<HTMLElement>(`.${animateElementClass}`);
-        if (elementToAnimate?.textContent === null || elementToAnimate=== null) throw new Error("")
+    constructor(animateElementClass: string, textToAnimate: string[], writingSpeed: number, typingStyle: TypingStyleType) {
+        const elementToAnimate = document.querySelector<HTMLElement>(`.${animateElementClass}`);
+        if (elementToAnimate?.textContent === null || elementToAnimate === null) throw new Error("")
         if (writingSpeed < 0) throw Error("This number have to be positive.")
 
         this.textToAnimate = textToAnimate
@@ -41,7 +41,7 @@ class TypingEffectV20 {
         // "Ala ma kota".split(" ") / 3
 
         // console.log(this.textToAnimate[this.activeText].length);
-        
+
 
         this.animateElement.textContent += textToAnimateStyle
         this.activeLetter++;
@@ -90,17 +90,18 @@ class TypingEffectV20 {
             const deleteCharacterTimeout = setTimeout(() => {
                 this.activeText++
                 // console.log(this.activeText)
-                // this.mainFunction()
+                this.mainFunction()
                 clearTimeout(deleteCharacterTimeout)
             }, 3000)
+            // return;
         }
 
-        const timeoutId = setTimeout(() => {
-            this.deleteText();
-            clearTimeout(timeoutId);
-        }, this.writingSpeed)
-
-        
+        if (this.activeLetter > 0) {
+            const timeoutId = setTimeout(() => {
+                this.deleteText();
+                clearTimeout(timeoutId);
+            }, this.writingSpeed)
+        }
 
 
     }
@@ -122,7 +123,8 @@ testAppV20.appInit()
 
 
 
-    // trackMeNow-medium
-//asynchroniczność
+    // trackMeNow-medium //asynchroniczność
+    
+
 //local/session storage
 //fetch xml get respond
